@@ -1,26 +1,205 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Primary colors */
+  --color-primary-50: #f4f9f0;
+  --color-primary-100: #d4eac8;
+  --color-primary-200: #7cb97a;
+  --color-primary-300: #4a7c2f;
+  --color-primary-400: #2d5016;
+  /* Secondary Colors */
+  --color-secondary-50: #fde8d4;
+  --color-secondary-100: #f0a96b;
+  --color-secondary-200: #c85a1a;
+  --color-secondary-300: #7a3310;
+  /* Surface Colors */
+  --color-surface-50: #faf9f6;
+  --color-surface-100: #e8e6e0;
+  --color-surface-200: #b4b2a9;
+  --color-surface-300: #5c5c58;
+  --color-surface-400: #1a1a18;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Spacing */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Radius */
+  --radius-xs: 2px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 0 #e8e6e0, 0 2px 6px rgba(26,26,24,0,06);
+  --shadow-sm: 0 2px 0 #d4eac8, 0 4px 12px rgba(45,80,22,0.12);
+  --shadow-md: 0 2px 0 #2d5016, 0 4px 12px rgba(45,80,22,0.25);
+  --shadow-md-hover: 0 3px 0 #2d5016, 0 6px 16px rgba(45,80,22,0.3);
+  --shadow-md-active: 0 1px 0 #2d5016, 0 2px 6px rgba(45,80,22,0.2);
+  --shadow-danger: 0 2px 0 #7a3310, 0 4px 12px rgba(200,90,26,0.25);
+  --shadow-danger-hover: 0 3px 0 #7a3310, 0 6px 16px rgba(200,90,26,0.3);
+  --shadow-danger-active: 0 1px 0 #7a3310, 0 2px 6px rgba(200,90,26,0.2);
+  --shadow-lg: 0 8px 32px rgba(26,26,24,0.14), 0 2px 8px rgba(26,26,24,0.08);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-primary-50);
+  color: var(--color-surface-400);
+  font-family: 'DM Sans', sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: 'DM Serif Display', serif;
+}
+
+.text-display {
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.text-h1 {
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+.text-h2 {
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.text-h3 {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.text-h4 {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.text-body {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.text-body-sm {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.text-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.text-caption {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.text-meta {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--color-primary-300);
+  color: var(--color-surface-50);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-md-hover);
+}
+
+.btn-primary:active {
+  box-shadow: var(--shadow-md-active);
+  transform: translateY(1px);
+}
+
+.btn-primary:disabled {
+  background-color: var(--color-surface-200);
+  box-shadow: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--color-primary-300);
+  color: var(--color-primary-300);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-ghost:hover {
+  box-shadow: var(--shadow-md-hover);
+}
+
+.btn-ghost:active {
+  box-shadow: var(--shadow-md-active);
+  transform: translateY(1px);
+}
+
+.btn-ghost:disabled {
+  color: var(--color-surface-200);
+  border: 1px solid var(--color-surface-100);
+  box-shadow: none;
+}
+
+.btn-danger {
+  background-color: var(--color-secondary-200);
+  color: var(--color-surface-50);
+  box-shadow: var(--shadow-danger);
+}
+
+.btn-danger:hover {
+  box-shadow: var(--shadow-danger-hover);
+}
+
+.btn-danger:active {
+  box-shadow: var(--shadow-danger-active);
+  transform: translateY(1px);
+}
+
+.btn-danger:disabled {
+  background-color: var(--color-surface-200);
+  box-shadow: none;
+}
+
+/* Card */
+.card {
+  background-color: var(--color-surface-50);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
 }
