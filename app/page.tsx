@@ -9,9 +9,9 @@ export default async function Page() {
   const { data: products } = await supabase.from('products').select()
 
   return (
-    <div className='bg-[#FAF9F6] p-10'>
+    <div className='flex flex-col p-10 gap-5'>
       {products?.map((product) => 
-        <ProductCard key={product.id} data={product}/>
+        <ProductCard key={product.id} product={product}/>
       )}
     </div>
   )
