@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DMSans } from "./fonts";
+import { DMSans400, DMSans500 } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${DMSans.className} h-full antialiased`}
+      className={`${DMSans400.variable} ${DMSans500.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-primary-50">{children}</body>
     </html>

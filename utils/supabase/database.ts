@@ -37,7 +37,7 @@ export async function getProducts({title, ngoId}: getProductsType = {}) {
     return data;
 }
 
-export async function getNGOs({name, cause, id}: getNGOsType = {}) {
+export async function getNGOs({name, cause}: getNGOsType = {}) {
     let query = supabase.from('ngos').select();
 
     if (name) {
@@ -48,11 +48,15 @@ export async function getNGOs({name, cause, id}: getNGOsType = {}) {
         query = query.eq('cause', cause);
     }
 
-    if (id) {
-        query = query.eq('id', id);
-    }
-
     const { data, error } = await query;
+
+    if (error) throw error;
+
+    return data;
+}
+
+export async function getNGOsByID(id: string) {
+    const { data, error } = await supabase.from('ngos').select().eq('id', id).single();
 
     if (error) throw error;
 

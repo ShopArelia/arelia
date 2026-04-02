@@ -1,12 +1,9 @@
 import ProductCard from '@/components/ProductCard'
-import { createClient } from '@/utils/supabase/server'
-import { cookies } from 'next/headers'
+import { getProducts } from '@/utils/supabase/database'
 
 export default async function Page() {
-  const cookieStore = await cookies()
-  const supabase = createClient(cookieStore)
 
-  const { data: products } = await supabase.from('products').select()
+  const products = await getProducts();
 
   return (
     <div className='flex flex-col p-10 gap-5'>

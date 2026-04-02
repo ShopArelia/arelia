@@ -15,6 +15,16 @@ export const DMSans = localFont({
   ]
 })
 
+export const DMSans400 = localFont({
+  src: './fonts/DM Sans/DMSans-Regular.ttf',
+  variable: '--font-DMSans-400'
+})
+
+export const DMSans500 = localFont({
+  src: './fonts/DM Sans/DMSans-Medium.ttf',
+  variable: '--font-DMSans-500'
+})
+
 export const DMSerifDisplay = localFont({
   src: [
     {

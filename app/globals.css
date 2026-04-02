@@ -43,6 +43,10 @@
 }
 
 @theme {
+  /* Fonts */
+  --font-DMSans-400: var(--font-DMSans-400);
+  --font-DMSans-500: var(--font-DMSans-500);
+
   /* Primary colors */
   --color-primary-50: var(--color-primary-50);
   --color-primary-100: var(--color-primary-100);
@@ -189,11 +193,6 @@ h1, h2, h3 {
   transform: translateY(1px);
 }
 
-.btn-primary:disabled {
-  background-color: var(--color-surface-200);
-  box-shadow: none;
-}
-
 .btn-ghost {
   background: transparent;
   border: 1px solid var(--color-primary-300);
@@ -208,12 +207,6 @@ h1, h2, h3 {
 .btn-ghost:active {
   box-shadow: var(--shadow-md-active);
   transform: translateY(1px);
-}
-
-.btn-ghost:disabled {
-  color: var(--color-surface-200);
-  border: 1px solid var(--color-surface-100);
-  box-shadow: none;
 }
 
 .btn-danger {
@@ -231,7 +224,7 @@ h1, h2, h3 {
   transform: translateY(1px);
 }
 
-.btn-danger:disabled {
+.btn-disabled {
   background-color: var(--color-surface-200);
   box-shadow: none;
 }
