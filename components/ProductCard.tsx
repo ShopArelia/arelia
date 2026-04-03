@@ -2,7 +2,6 @@ import Image from "next/image";
 import Button from "./Button";
 
 import { Tables } from "@/types/supabase";
-import { DMSans } from "@/app/fonts";
 import { getNGOsByID } from "@/utils/supabase/database";
 
 export default async function ProductCard({product}: {product: Tables<'products'>}) {

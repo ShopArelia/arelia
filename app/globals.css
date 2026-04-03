@@ -46,6 +46,8 @@
   /* Fonts */
   --font-DMSans-400: var(--font-DMSans-400);
   --font-DMSans-500: var(--font-DMSans-500);
+  --font-DMSerif-Reg: var(--font-DMSerif-Reg);
+  --font-DMSerif-Italic: var(--font-DMSerif-Italic);
 
   /* Primary colors */
   --color-primary-50: var(--color-primary-50);

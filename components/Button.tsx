@@ -1,6 +1,4 @@
-import React from "react";
 import clsx from "clsx";
-import { DMSans400 } from "@/app/fonts";
 
 type ButtonProps = {
     variant?: 'primary' | 'ghost' | 'danger';
