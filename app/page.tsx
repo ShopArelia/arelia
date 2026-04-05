@@ -5,7 +5,6 @@ import { getProducts } from '@/utils/supabase/database'
 export default async function Page() {
 
 
-  return (
-    <Navbar />
+  return (<div></div>
   )
 }
