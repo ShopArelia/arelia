@@ -27,7 +27,7 @@ export default async function ProductCard({product}: {product: Tables<'products'
                 </div>
                 <div className="flex items-center justify-between">
                     <p className='text-body font-DMSans-400 text-surface-400 leading-none'>${product.price}</p>
-                    <Button link={product.external_link} text="Buy now"/>
+                    <Button link={product.external_link} text="Buy now" newTab={true}/>
                 </div>
             </div>
         </div>

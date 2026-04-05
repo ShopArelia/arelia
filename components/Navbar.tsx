@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import Button from "./Button";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
@@ -22,7 +23,7 @@ export default function Navbar() {
                 <Link className={`text-body ${pathname === '/about' ? 'font-DMSans-500 text-primary-400' : 'font-DMSans-400 text-primary-300'}`} href='/about'>About</Link>
             </div>
 
-            <Link className="btn text-body-sm font-DMSans-500 btn-primary" href="/contact">Get Involved</Link>
+            <Button text="Get Involved" link="/contact" />
 
         </div>
     )

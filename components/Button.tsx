@@ -1,16 +1,18 @@
+import Link from "next/link";
 import clsx from "clsx";
 
 type ButtonProps = {
     variant?: 'primary' | 'ghost' | 'danger';
     disabled?: boolean;
-    className?: string;
+    classN?: string;
     link: string;
     text: string;
+    newTab?: boolean;
 };
 
-export default function Button({text, variant = 'primary', disabled = false, className, link}: ButtonProps) {
+export default function Button({text, variant = 'primary', disabled = false, newTab = false, classN = "", link}: ButtonProps) {
     return (
-        <a 
+        <Link 
             href={link}
             className={clsx(
                 'btn text-body-sm font-DMSans-500',
@@ -20,12 +22,12 @@ export default function Button({text, variant = 'primary', disabled = false, cla
                     'btn-danger': variant === 'danger',
                     'btn-disabled': disabled
                 },
-                className
+                classN
             )}
-            target="_blank"
-            rel="noopener noreferrer"
+            target={newTab ? "_blank" : ""}
+            rel={newTab ? "noopener noreferrer" : ""}
         >
             {text}
-        </a>
+        </Link>
     );
 }
