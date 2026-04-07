@@ -4,12 +4,14 @@ import { cookies } from "next/headers";
 type getProductsType = {
     title?: string;
     ngoId?: string;
+    limit?: number;
 };
 
 type getNGOsType = {
     name?: string;
     cause?: string;
     id?: string;
+    limit?: number;
 }
 
 type getBlogsType = {
@@ -19,7 +21,7 @@ type getBlogsType = {
 const cookieStore = await cookies();
 const supabase = createClient(cookieStore);
 
-export async function getProducts({title, ngoId}: getProductsType = {}) {
+export async function getProducts({title, ngoId, limit}: getProductsType = {}) {
     let query = supabase.from('products').select();
     
     if (title) {
@@ -30,6 +32,10 @@ export async function getProducts({title, ngoId}: getProductsType = {}) {
         query = query.eq('ngo_id', ngoId);
     }
 
+    if (limit) {
+        query = query.limit(limit);
+    }
+
     const { data, error } = await query;
 
     if (error) throw error;
@@ -37,7 +43,7 @@ export async function getProducts({title, ngoId}: getProductsType = {}) {
     return data;
 }
 
-export async function getNGOs({name, cause}: getNGOsType = {}) {
+export async function getNGOs({name, cause, limit}: getNGOsType = {}) {
     let query = supabase.from('ngos').select();
 
     if (name) {
@@ -46,6 +52,10 @@ export async function getNGOs({name, cause}: getNGOsType = {}) {
 
     if (cause) {
         query = query.eq('cause', cause);
+    }
+
+    if (limit) {
+        query = query.limit(limit);
     }
 
     const { data, error } = await query;

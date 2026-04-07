@@ -104,11 +104,6 @@
 body {
   background: var(--color-primary-50);
   color: var(--color-surface-400);
-  font-family: 'DM Sans', sans-serif;
-}
-
-h1, h2, h3 {
-  font-family: 'DM Serif Display', serif;
 }
 
 .text-display {

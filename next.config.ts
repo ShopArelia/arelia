@@ -9,7 +9,10 @@ module.exports = {
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
-      new URL('https://placehold.co/300x300'),
+      {
+        protocol: "https",
+        hostname: "**",
+      },
     ],
   },
 }
