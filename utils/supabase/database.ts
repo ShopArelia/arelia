@@ -18,10 +18,13 @@ type getBlogsType = {
     title?: string;
 }
 
-const cookieStore = await cookies();
-const supabase = createClient(cookieStore);
+async function getSupabase() {
+    const cookieStore = await cookies();
+    return createClient(cookieStore);
+}
 
 export async function getProducts({title, ngoId, limit}: getProductsType = {}) {
+    const supabase = await getSupabase();
     let query = supabase.from('products').select();
     
     if (title) {
@@ -44,6 +47,7 @@ export async function getProducts({title, ngoId, limit}: getProductsType = {}) {
 }
 
 export async function getNGOs({name, cause, limit}: getNGOsType = {}) {
+    const supabase = await getSupabase();
     let query = supabase.from('ngos').select();
 
     if (name) {
@@ -66,6 +70,7 @@ export async function getNGOs({name, cause, limit}: getNGOsType = {}) {
 }
 
 export async function getNGOsByID(id: string) {
+    const supabase = await getSupabase();
     const { data, error } = await supabase.from('ngos').select().eq('id', id).single();
 
     if (error) throw error;
@@ -74,6 +79,7 @@ export async function getNGOsByID(id: string) {
 }
 
 export async function getBlogs({title}: getBlogsType = {}) {
+    const supabase = await getSupabase();
     let query = supabase.from('blogs').select();
 
     if (title) {
@@ -88,6 +94,7 @@ export async function getBlogs({title}: getBlogsType = {}) {
 }
 
 export async function getBlogBySlug(slug: string) {
+    const supabase = await getSupabase();
     const { data, error } = await supabase.from('blogs').select().eq('slug', slug).single();
 
     if (error) throw error;
