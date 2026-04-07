@@ -89,10 +89,10 @@ export default async function Page() {
 
       <Divider />
 
-      {/* Our nonprofit partners */}
+      {/* nonprofits we support */}
       <div className='flex flex-col px-16 py-24 gap-16 bg-primary-50'>
         <div className='flex items-center justify-between'>
-          <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Our nonprofit partners</h1>
+          <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Nonprofits we support</h1>
           <Link className='flex gap-1 items-center justify-center' href='/shop'>
             <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all 30</p>
             <Image src='./icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
