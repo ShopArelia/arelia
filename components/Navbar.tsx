@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import MaskedIcon from "./MaskedIcon";
 import Button from "./Button";
 import { usePathname } from "next/navigation";
 
@@ -11,8 +12,8 @@ export default function Navbar() {
     return (
         <div className="w-full sticky flex top-0 px-6 py-4 items-center justify-between bg-primary-50">
 
-            <Link className="flex items-center justify-center gap-1 font-DMSerif-Reg text-[20px] text-primary-400 leading-none" href="/">
-                <Image src='./web_logo.svg' alt="Arelia logo"  width={24} height={24} unoptimized />
+            <Link className="flex items-center justify-center gap-2 font-DMSerif-Reg text-h2 text-primary-400 leading-none" href="/">
+                <MaskedIcon src="/web_logo.svg" size="36px" className="text-primary-400" />
                 Arelia
             </Link>
 
