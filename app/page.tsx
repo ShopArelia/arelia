@@ -9,6 +9,7 @@ import Divider from '@/components/Divider';
 import { getProducts, getNGOs, getBlogs } from '@/utils/supabase/database';
 import { Tables } from '@/types/supabase';
 import BlogPost from '@/components/BlogPost';
+import Footer from '@/components/Footer';
 
 export default async function Page() {
   const products: Array<Tables<'products'>> = await getProducts({ limit: 7});
@@ -132,7 +133,6 @@ export default async function Page() {
           </Link>
         </div>
         
-        
         <div className='flex flex-col gap-6'>
           {blogs.map((blog, index) => (
             <Fragment key={blog.id}>
@@ -141,8 +141,10 @@ export default async function Page() {
             </Fragment>
           ))}
         </div>
-
       </div>
+
+      {/* Footer */}
+      <Footer />
 
     </div>
   )
