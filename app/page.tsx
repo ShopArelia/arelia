@@ -1,16 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Fragment } from 'react';
 
 import Button from '@/components/Button';
 import ProductCard from '@/components/ProductCard';
 import Divider from '@/components/Divider';
 
-import { getProducts, getNGOs } from '@/utils/supabase/database';
+import { getProducts, getNGOs, getBlogs } from '@/utils/supabase/database';
 import { Tables } from '@/types/supabase';
+import BlogPost from '@/components/BlogPost';
 
 export default async function Page() {
   const products: Array<Tables<'products'>> = await getProducts({ limit: 7});
   const ngos: Array<Tables<'ngos'>> = await getNGOs({ limit: 6 });
+  const blogs: Array<Tables<'blogs'>> = await getBlogs({ limit: 2 });
 
   return (
     <div className='w-full flex flex-col'>
@@ -115,6 +118,30 @@ export default async function Page() {
             </Link>
           </div>
         </div>
+      </div>
+
+      <Divider />
+
+      {/* From the blog */}
+      <div className='flex flex-col px-16 py-24 gap-16 bg-white'>
+        <div className='flex items-center justify-between'>
+          <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>From the blog</h1>
+          <Link className='flex gap-1 items-center justify-center' href='/blog'>
+            <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>Read all posts</p>
+            <Image src='./icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
+          </Link>
+        </div>
+        
+        
+        <div className='flex flex-col gap-6'>
+          {blogs.map((blog, index) => (
+            <Fragment key={blog.id}>
+              <BlogPost blog={blog} />
+              {index < blogs.length - 1 ? <Divider /> : null}
+            </Fragment>
+          ))}
+        </div>
+
       </div>
 
     </div>
