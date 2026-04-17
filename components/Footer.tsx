@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import Divider from "./Divider";
+import MaskedIcon from "./MaskedIcon";
 
 export default function Footer() {
     return (
@@ -8,9 +8,18 @@ export default function Footer() {
             <div className="w-full flex gap-12">
 
                 <div className="w-full flex flex-col gap-3">
-                    <div className="flex gap-1">
-                        <Image src='./web_logo.svg' alt="Arelia logo"  width={24} height={24} unoptimized />
-                        Arelia
+                    <Link href='/' className="flex items-center gap-1 text-surface-50">
+                        <MaskedIcon src="/web_logo.svg" size="40px" />
+                        <p className="text-h1 text-surface-50 font-DMSerif-Reg">Arelia</p>
+                    </Link>
+                    <p className="text-body-sm text-surface-200 font-DMSans-400">A marketplace where every purchase supports a verified nonprofit. Shop with purpose.</p>
+                    <div className="flex gap-3">
+                        <Link href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="w-[36px] h-[36px] flex items-center justify-center border-2 rounded-md border-surface-300">
+                            <MaskedIcon src="/icons/instagram.svg" size="24px" className="text-primary-200" />
+                        </Link>
+                        <Link href="https://www.x.com" target="_blank" rel="noopener noreferrer" className="w-[36px] h-[36px] flex items-center justify-center border-2 rounded-md border-surface-300">
+                            <MaskedIcon src="/icons/x-twitter.svg" size="24px" className="text-primary-200" />
+                        </Link>
                     </div>
                 </div>
 
@@ -45,7 +54,15 @@ export default function Footer() {
                 </div>
 
             </div>
-            <Divider />
+
+            <Divider light={false} />
+
+            <div className="flex gap-6">
+                <p className="text-caption text-surface-300 font-DMSans-400">© 2026 Arelia</p>
+                <p className="text-caption text-surface-300 font-DMSans-400 underline">Privacy</p>
+                <p className="text-caption text-surface-300 font-DMSans-400 underline">Terms</p>
+                <p className="text-caption text-surface-300 font-DMSans-400 underline">Credit</p>
+            </div>
         </div>
     )
 }
