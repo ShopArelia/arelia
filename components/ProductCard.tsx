@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Button from "./Button";
 
-import { Tables } from "@/types/supabase";
-import { getNGOsByID } from "@/utils/supabase/database";
+import type { Tables } from "@/types/supabase";
 
-export default async function ProductCard({product}: {product: Tables<'products'>}) {
+type ProductCardProps = {
+    product: Tables<'products'>;
+    ngoName?: string;
+}
 
-    const ngo: Tables<'ngos'> = await getNGOsByID(product.ngo_id);
-
+export default function ProductCard({product, ngoName}: ProductCardProps) {
     return(
         <div className={`w-[200px] h-[310px] flex flex-col card bg-surface-50`}>
             <div className="w-full h-fit">
@@ -22,7 +23,7 @@ export default async function ProductCard({product}: {product: Tables<'products'
             </div>
             <div className="w-full h-full flex flex-col p-3 justify-between">
                 <div className="flex flex-col gap-1">
-                    <p className='text-meta font-DMSans-500 text-surface-300 leading-none'>{ngo.name}</p>
+                    <p className='text-meta font-DMSans-500 text-surface-300 leading-none'>{ngoName}</p>
                     <p className='text-body-sm font-DMSans-400 text-surface-400 leading-none'>{product.title}</p>
                 </div>
                 <div className="flex items-center justify-between">

@@ -3,6 +3,7 @@ import { DMSans400, DMSans500, DMSerifReg, DMSerifItalic } from "./fonts";
 import "./globals.css";
 
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Arelia",
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-primary-50">
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

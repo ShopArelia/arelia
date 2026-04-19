@@ -1,15 +1,32 @@
-'use client'
+import ShopPage from "@/components/ShopPage";
+import { getNGOs, getProductsByRange } from "@/utils/supabase/database";
+import type { Tables } from "@/types/supabase";
+import { SearchParams } from "next/dist/server/request/search-params";
 
-import { useState } from "react";
-import Header from "@/components/Header";
-import Divider from "@/components/Divider";
+const PAGE_SIZE = 12;
 
-export default function Page() {
-    const [text, setText] = useState<string>('');
-    return (
-        <div>
-            <Header title="Shop" description="320 products from 30 verified nonprofits" inputPlaceholder="Search products..." text={text} onChange={setText} />
-            <Divider />
-        </div>
-    )
+
+type ProductsType = {
+    data: Array<Tables<'products'>>;
+    count: number | null;
+}
+
+export default async function Page({ searchParams }: { searchParams: Promise<SearchParams> }) {
+    const {page} = await searchParams;
+    const pageNumber = Number(page ?? 1);
+    const from = (pageNumber - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+
+    const { data: products, count }: ProductsType = await getProductsByRange({from, to});
+    const ngos: Array<Tables<'ngos'>> = await getNGOs();
+    const ngoNameById = new Map(ngos.map((ngo) => [ngo.id, ngo.name]));
+
+    const totalPages = Math.ceil((count ?? 0) / PAGE_SIZE);
+
+    const shopProducts = products.map((product) => ({
+        ...product,
+        ngoName: ngoNameById.get(product.ngo_id) ?? "",
+    }));
+
+    return <ShopPage products={shopProducts ?? []} count={count ?? 0} currentPage={pageNumber} totalPages = {totalPages} />
 }

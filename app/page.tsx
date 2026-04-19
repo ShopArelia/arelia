@@ -7,14 +7,16 @@ import ProductCard from '@/components/ProductCard';
 import Divider from '@/components/Divider';
 
 import { getProducts, getNGOs, getBlogs } from '@/utils/supabase/database';
-import { Tables } from '@/types/supabase';
+import type { Tables } from '@/types/supabase';
 import BlogPost from '@/components/BlogPost';
 import Footer from '@/components/Footer';
 
 export default async function Page() {
   const products: Array<Tables<'products'>> = await getProducts({ limit: 7});
-  const ngos: Array<Tables<'ngos'>> = await getNGOs({ limit: 6 });
+  const ngos: Array<Tables<'ngos'>> = await getNGOs();
   const blogs: Array<Tables<'blogs'>> = await getBlogs({ limit: 2 });
+  const ngoNameById = new Map(ngos.map((ngo) => [ngo.id, ngo.name]));
+  const featuredNgos = ngos.slice(0, 6);
 
   return (
     <div className='w-full flex flex-col'>
@@ -61,7 +63,7 @@ export default async function Page() {
 
         <div className='flex items-center justify-between'>
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} ngoName={ngoNameById.get(product.ngo_id) ?? ''} />
           ))}
         </div>
       </div>
@@ -105,7 +107,7 @@ export default async function Page() {
 
         <div className='flex items-center gap-6'>
           <div className='flex gap-4'>
-            {ngos.map((ngo) => (
+            {featuredNgos.map((ngo) => (
               <div key={ngo.id} className='w-[60px] h-[60px] rounded-xl border border-surface-200 overflow-hidden'>
                 <Image key={ngo.id} src={ngo.logo_url} alt={ngo.name} width={60} height={60} />
               </div>
@@ -142,9 +144,6 @@ export default async function Page() {
           ))}
         </div>
       </div>
-
-      {/* Footer */}
-      <Footer />
 
     </div>
   )
