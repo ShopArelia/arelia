@@ -24,8 +24,8 @@ export type SortOption = {
 
 const FILTERS: FilterOption[] = [
     { label: "All", value: 'all' },
-    { label: "Environment", value: 'environment' },
-    { label: "Animal welfare", value: 'animal-welfare' },
+    { label: "Environment", value: 'Environment' },
+    { label: "Wildlife", value: 'Wildlife' },
     { label: "Education", value: 'education' },
     { label: "Women & girls", value: 'women-girls' },
 ]

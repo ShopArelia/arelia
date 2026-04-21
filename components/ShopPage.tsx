@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Header from "@/components/Header";
 import Divider from "@/components/Divider";
@@ -19,17 +19,32 @@ type ShopPageProps = {
     count: number;
     currentPage: number;
     totalPages: number;
+    filter: string;
 };
 
-export default function ShopPage({ products, count, currentPage, totalPages }: ShopPageProps) {
+export default function ShopPage({ products, count, currentPage, totalPages, filter }: ShopPageProps) {
     const [text, setText] = useState<string>('');
-    const [filter, setFilter] = useState<string>('all');
     const [sort, setSort] = useState<string>('');
+
+    const searchParams = useSearchParams();
     const router = useRouter();
+    const [isPending, startTransition] = useTransition();
+
+    const handleFilter = (value: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("filter", value);
+        params.set("page", "1")
+        console.log(params.toString());
+        startTransition(() => {
+            router.replace(`/shop?${params.toString()}`);
+        })
+    }
 
     const changePage = (page: number) => {
         if (page < 1 || page > totalPages) return;
-        router.push(`/shop?page=${page}`);
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("page", String(page));
+        router.push(`/shop?${params.toString()}`);
     }
 
     return (
@@ -49,7 +64,7 @@ export default function ShopPage({ products, count, currentPage, totalPages }: S
                 countLabel="Products"
                 activeFilter={filter}
                 activeSort={sort}
-                onFilterChange={setFilter}
+                onFilterChange={handleFilter}
                 onSortChange={setSort}
             />
 

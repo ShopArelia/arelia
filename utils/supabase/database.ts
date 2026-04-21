@@ -10,6 +10,7 @@ type getProductsType = {
 type getProductsByRangeType = {
     from: number;
     to: number;
+    filterVal: string;
 }
 
 type getNGOsType = {
@@ -52,10 +53,14 @@ export async function getProducts({title, ngoId, limit}: getProductsType = {}) {
     return data;
 }
 
-export async function getProductsByRange({from, to}: getProductsByRangeType) {
+export async function getProductsByRange({from, to, filterVal}: getProductsByRangeType) {
     const supabase = await getSupabase();
-    let query = supabase.from('products').select("*", { count: "exact" }).range(from, to);
+    let query = supabase.from('products').select(`*, ngo:ngo_id!inner (id, name, cause)`, { count: "exact" }).range(from, to);
 
+    if (filterVal !== 'all') {
+        query.eq("ngo.cause", filterVal);
+    }
+    
     const { data, count, error } = await query;
 
     if (error) throw error;
