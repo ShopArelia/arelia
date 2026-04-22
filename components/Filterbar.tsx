@@ -8,7 +8,6 @@ type FilterbarProps = {
     countLabel: string;
     activeFilter: string;
     activeSort: string;
-    onFilterChange: (value: string) => void;
     onSortChange: (value: string) => void;
 }
 
@@ -26,8 +25,6 @@ const FILTERS: FilterOption[] = [
     { label: "All", value: 'all' },
     { label: "Environment", value: 'Environment' },
     { label: "Wildlife", value: 'Wildlife' },
-    { label: "Education", value: 'education' },
-    { label: "Women & girls", value: 'women-girls' },
 ]
 
 const SORTS: SortOption[] = [
@@ -37,10 +34,7 @@ const SORTS: SortOption[] = [
     { label: "Newest", value: 'newest' },
 ]
 
-export default function Filterbar({ totalCount, countLabel, activeFilter, activeSort, onFilterChange, onSortChange }: FilterbarProps) {
-    const handleFilter = (value: string) => {
-        onFilterChange(value);
-    }
+export default function Filterbar({ totalCount, countLabel, activeFilter, activeSort, onSortChange }: FilterbarProps) {
 
     const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
         onSortChange(e.target.value);
@@ -50,7 +44,7 @@ export default function Filterbar({ totalCount, countLabel, activeFilter, active
         <div className="w-full flex px-16 py-3 gap-6 items-center">
             <div className="flex gap-6 items-center">
                 {FILTERS.map((filter) => (
-                    <Button key={filter.value} text={filter.label} variant={activeFilter === filter.value ? 'primary' : 'ghost'} link="" onClick={() => handleFilter(filter.value)} />
+                    <Button key={filter.value} text={filter.label} variant={activeFilter === filter.value ? 'primary' : 'ghost'} link={`/shop?page=1&filter=${filter.value}`} />
                 ))}
             </div>
 

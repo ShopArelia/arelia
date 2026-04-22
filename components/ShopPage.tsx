@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import Header from "@/components/Header";
@@ -28,17 +28,6 @@ export default function ShopPage({ products, count, currentPage, totalPages, fil
 
     const searchParams = useSearchParams();
     const router = useRouter();
-    const [isPending, startTransition] = useTransition();
-
-    const handleFilter = (value: string) => {
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("filter", value);
-        params.set("page", "1")
-        console.log(params.toString());
-        startTransition(() => {
-            router.replace(`/shop?${params.toString()}`);
-        })
-    }
 
     const changePage = (page: number) => {
         if (page < 1 || page > totalPages) return;
@@ -64,7 +53,6 @@ export default function ShopPage({ products, count, currentPage, totalPages, fil
                 countLabel="Products"
                 activeFilter={filter}
                 activeSort={sort}
-                onFilterChange={handleFilter}
                 onSortChange={setSort}
             />
 
