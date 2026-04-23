@@ -20,14 +20,21 @@ type ShopPageProps = {
     currentPage: number;
     totalPages: number;
     filter: string;
+    sort: string;
 };
 
-export default function ShopPage({ products, count, currentPage, totalPages, filter }: ShopPageProps) {
+export default function ShopPage({ products, count, currentPage, totalPages, filter, sort }: ShopPageProps) {
     const [text, setText] = useState<string>('');
-    const [sort, setSort] = useState<string>('');
 
     const searchParams = useSearchParams();
     const router = useRouter();
+
+    const handleSort = (value: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("sort", value);
+        params.set("page", "1");
+        router.push(`/shop?${params.toString()}`);
+    }
 
     const changePage = (page: number) => {
         if (page < 1 || page > totalPages) return;
@@ -53,7 +60,7 @@ export default function ShopPage({ products, count, currentPage, totalPages, fil
                 countLabel="Products"
                 activeFilter={filter}
                 activeSort={sort}
-                onSortChange={setSort}
+                onSortChange={handleSort}
             />
 
             <Divider />

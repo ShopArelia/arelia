@@ -28,10 +28,9 @@ const FILTERS: FilterOption[] = [
 ]
 
 const SORTS: SortOption[] = [
-    { label: "Featured", value: 'featured' },
+    { label: "Latest", value: 'latest' },
     { label: "Price: low to high", value: 'price-asc' },
     { label: "Price: high to low", value: 'price-desc' },
-    { label: "Newest", value: 'newest' },
 ]
 
 export default function Filterbar({ totalCount, countLabel, activeFilter, activeSort, onSortChange }: FilterbarProps) {
@@ -44,7 +43,7 @@ export default function Filterbar({ totalCount, countLabel, activeFilter, active
         <div className="w-full flex px-16 py-3 gap-6 items-center">
             <div className="flex gap-6 items-center">
                 {FILTERS.map((filter) => (
-                    <Button key={filter.value} text={filter.label} variant={activeFilter === filter.value ? 'primary' : 'ghost'} link={`/shop?page=1&filter=${filter.value}`} />
+                    <Button key={filter.value} text={filter.label} variant={activeFilter === filter.value ? 'primary' : 'ghost'} link={`/shop?page=1&sort=${activeSort}&filter=${filter.value}`} />
                 ))}
             </div>
 
