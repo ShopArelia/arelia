@@ -13,6 +13,7 @@ type getProductsByRangeType = {
     filterVal: string;
     column?: string;
     ascending?: boolean;
+    searchVal?: string;
 }
 
 type getNGOsType = {
@@ -55,7 +56,7 @@ export async function getProducts({title, ngoId, limit}: getProductsType = {}) {
     return data;
 }
 
-export async function getProductsByRange({from, to, filterVal, column, ascending}: getProductsByRangeType) {
+export async function getProductsByRange({from, to, filterVal, column, ascending, searchVal}: getProductsByRangeType) {
     const supabase = await getSupabase();
     let query = supabase.from('products').select(`*, ngo:ngo_id!inner (id, name, cause)`, { count: "exact" });
 
@@ -67,6 +68,10 @@ export async function getProductsByRange({from, to, filterVal, column, ascending
 
     if (filterVal !== 'all') {
         query = query.eq("ngo.cause", filterVal);
+    }
+
+    if (searchVal) {
+        query = query.ilike("title", `%${searchVal}%`);
     }
     
     const { data, count, error } = await query;

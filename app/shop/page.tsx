@@ -21,17 +21,18 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
         "price-desc": {column: "price", ascending: false},
     } as const;
 
-    const {page, filter, sort} = await searchParams;
+    const {page, filter, sort, search} = await searchParams;
     const pageNumber = Number(page ?? 1);
     const filterVal = filter ?? "all";
     const sortVal = sort ?? "latest";
+    const searchVal = search ?? "";
 
     const from = (pageNumber - 1) * PAGE_SIZE;
     const to = from + PAGE_SIZE - 1;
 
     const { column, ascending } = SORT_MAP[sortVal as keyof typeof SORT_MAP] ?? SORT_MAP["latest"];
 
-    const { data: products, count }: ProductsType = await getProductsByRange({ from, to, filterVal, column, ascending });
+    const { data: products, count }: ProductsType = await getProductsByRange({ from, to, filterVal, column, ascending, searchVal });
     const ngos: Array<Tables<'ngos'>> = await getNGOs();
     const ngoNameById = new Map(ngos.map((ngo) => [ngo.id, ngo.name]));
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import Header from "@/components/Header";
@@ -24,10 +24,29 @@ type ShopPageProps = {
 };
 
 export default function ShopPage({ products, count, currentPage, totalPages, filter, sort }: ShopPageProps) {
-    const [text, setText] = useState<string>('');
-
     const searchParams = useSearchParams();
     const router = useRouter();
+    
+    const [text, setText] = useState<string>(searchParams.get("search") ?? "");
+
+    useEffect(() => {
+        setText(searchParams.get("search") ?? "");
+    }, [searchParams]);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            const params = new URLSearchParams(searchParams.toString());
+            if (text) {
+                params.set("search", text);
+            } else {
+                params.delete("search");
+            }
+            params.set("page", "1");
+            router.push(`/shop?${params.toString()}`);
+        }, 400);
+
+        return () => clearTimeout(timeout);
+    }, [text]);
 
     const handleSort = (value: string) => {
         const params = new URLSearchParams(searchParams.toString());
