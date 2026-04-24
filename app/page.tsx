@@ -15,10 +15,15 @@ type NGOsType = {
     count: number | null;
 }
 
+type BlogsType = {
+    data: Array<Tables<'blogs'>>;
+    count: number | null;
+}
+
 export default async function Page() {
   const products: Array<Tables<'products'>> = await getProducts({ limit: 7});
   const {data: ngos, count: _}: NGOsType = await getNGOs({});
-  const blogs: Array<Tables<'blogs'>> = await getBlogs({ limit: 2 });
+  const {data: blogs, count: __}: BlogsType = await getBlogs({ limit: 2 });
   const ngoNameById = new Map(ngos.map((ngo) => [ngo.id, ngo.name]));
   const featuredNgos = ngos.slice(0, 6);
 

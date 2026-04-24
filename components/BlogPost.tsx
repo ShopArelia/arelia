@@ -16,7 +16,7 @@ export default function BlogPost({blog}: {blog: Tables<"blogs">}) {
         : blog.updated_at;
 
     return (
-        <Link href={`/blog/${blog.slug}`} className="w-full flex flex-col gap-5">
+        <Link href={`/blogs/${blog.slug}`} className="w-full flex flex-col gap-5">
             <div className="flex flex-col gap-3">
                 <p className="text-h2 text-surface-400 font-DMSerif-Reg leading-none">{blog.title}</p>
                 <p className="text-label text-surface-300 font-DMSans-500 leading-none">{blog.read_time} min read</p>

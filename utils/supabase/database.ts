@@ -28,6 +28,8 @@ type getNGOsType = {
 type getBlogsType = {
     title?: string;
     limit?: number;
+    from?: number;
+    to?: number;
 }
 
 async function getSupabase() {
@@ -119,9 +121,13 @@ export async function getNGOsByID(id: string) {
     return data;
 }
 
-export async function getBlogs({title, limit}: getBlogsType = {}) {
+export async function getBlogs({title, limit, from, to}: getBlogsType = {}) {
     const supabase = await getSupabase();
-    let query = supabase.from('blogs').select();
+    let query = supabase.from('blogs').select("*", { count: "exact" });
+
+    if (from && to) {
+        query = query.range(from, to);
+    }
 
     if (title) {
         query = query.ilike('title', `%${title}%`);
@@ -131,11 +137,11 @@ export async function getBlogs({title, limit}: getBlogsType = {}) {
         query = query.limit(limit);
     }
     
-    const { data, error } = await query;
+    const { data, count, error } = await query;
 
     if (error) throw error;
 
-    return data;
+    return { data, count };
 }
 
 export async function getBlogBySlug(slug: string) {
