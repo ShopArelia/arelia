@@ -3,30 +3,27 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import Header from "@/components/Header";
-import Divider from "@/components/Divider";
-import Filterbar from "@/components/Filterbar";
-import ProductCard from "@/components/ProductCard";
+import Header from "./Header";
+import Divider from "./Divider";
+import Filterbar from "./Filterbar";
+import NGOCard from "./NGOCard";
 import Pagination from "./Pagination";
 import type { Tables } from "@/types/supabase";
 
-type ShopProduct = Tables<'products'> & {
-    ngoName: string;
-};
-
-type ShopPageProps = {
-    products: Array<ShopProduct>;
+type NGOsPageProps = {
+    ngos: Array<Tables<'ngos'> & {
+        products: [{ count: number }];
+    }>;
     count: number;
     currentPage: number;
     totalPages: number;
     filter: string;
-    sort: string;
-};
+}
 
-export default function ShopPage({ products, count, currentPage, totalPages, filter, sort }: ShopPageProps) {
+export default function NGOPage({ ngos, count, currentPage, totalPages, filter }: NGOsPageProps) {
     const searchParams = useSearchParams();
     const router = useRouter();
-    
+
     const [text, setText] = useState<string>(searchParams.get("search") ?? "");
 
     useEffect(() => {
@@ -42,31 +39,24 @@ export default function ShopPage({ products, count, currentPage, totalPages, fil
                 params.delete("search");
             }
             params.set("page", "1");
-            router.push(`/shop?${params.toString()}`);
+            router.push(`/nonprofits?${params.toString()}`);
         }, 400);
 
         return () => clearTimeout(timeout);
     }, [text]);
 
-    const handleSort = (value: string) => {
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("sort", value);
-        params.set("page", "1");
-        router.push(`/shop?${params.toString()}`);
-    }
-
     const changePage = (page: number) => {
         if (page < 1 || page > totalPages) return;
         const params = new URLSearchParams(searchParams.toString());
         params.set("page", String(page));
-        router.push(`/shop?${params.toString()}`);
+        router.push(`/nonprofits?${params.toString()}`);
     }
 
     return (
         <div className="flex flex-col items-center bg-white">
             <Header
-                title="Shop"
-                description="320 products from 30 verified nonprofits"
+                title="Nonprofit directory"
+                description="30 nonprofits across 5 causes"
                 inputPlaceholder="Search products..."
                 text={text}
                 onChange={setText}
@@ -78,17 +68,16 @@ export default function ShopPage({ products, count, currentPage, totalPages, fil
                 totalCount={count}
                 countLabel="Products"
                 activeFilter={filter}
-                activeSort={sort}
-                onSortChange={handleSort}
+                sortActive={false}
             />
 
             <Divider />
 
-            {/* Shop Page */}
+            {/* NGOs */}
             <div className="w-full flex flex-col px-16 py-24 gap-16 items-center justify-center">
-                <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-16 ">
-                    {products.map((product) => (
-                        <ProductCard key={product.id} product={product} ngoName={product.ngoName} />
+                <div className="w-full flex flex-col item-center justify-center">
+                    {ngos.map((ngo) => (
+                        <NGOCard key={ngo.id} ngo={ngo} />
                     ))}
                 </div>
 

@@ -9,11 +9,15 @@ import Divider from '@/components/Divider';
 import { getProducts, getNGOs, getBlogs } from '@/utils/supabase/database';
 import type { Tables } from '@/types/supabase';
 import BlogPost from '@/components/BlogPost';
-import Footer from '@/components/Footer';
+
+type NGOsType = {
+    data: Array<Tables<'ngos'>>;
+    count: number | null;
+}
 
 export default async function Page() {
   const products: Array<Tables<'products'>> = await getProducts({ limit: 7});
-  const ngos: Array<Tables<'ngos'>> = await getNGOs();
+  const {data: ngos, count: _}: NGOsType = await getNGOs({});
   const blogs: Array<Tables<'blogs'>> = await getBlogs({ limit: 2 });
   const ngoNameById = new Map(ngos.map((ngo) => [ngo.id, ngo.name]));
   const featuredNgos = ngos.slice(0, 6);
@@ -99,7 +103,7 @@ export default async function Page() {
       <div className='flex flex-col px-16 py-24 gap-16 bg-primary-50'>
         <div className='flex items-center justify-between'>
           <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Nonprofits we support</h1>
-          <Link className='flex gap-1 items-center justify-center' href='/shop'>
+          <Link className='flex gap-1 items-center justify-center' href='/nonprofits'>
             <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all 30</p>
             <Image src='./icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
           </Link>
@@ -115,7 +119,7 @@ export default async function Page() {
           </div>
           <div className='flex items-baseline justify-center gap-2'>
             <p className='text-body font-DMSans-400 text-surface-300'>and 24 more verified organizations.</p>
-            <Link className='flex h-fit gap-1 items-center justify-center' href='/shop'>
+            <Link className='flex h-fit gap-1 items-center justify-center' href='/nonprofits'>
               <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all 30</p>
               <Image src='./icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
             </Link>

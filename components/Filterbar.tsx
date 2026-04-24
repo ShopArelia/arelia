@@ -7,8 +7,9 @@ type FilterbarProps = {
     totalCount: number;
     countLabel: string;
     activeFilter: string;
-    activeSort: string;
-    onSortChange: (value: string) => void;
+    sortActive?: boolean;
+    activeSort?: string;
+    onSortChange?: (value: string) => void;
 }
 
 export type FilterOption = {
@@ -33,10 +34,12 @@ const SORTS: SortOption[] = [
     { label: "Price: high to low", value: 'price-desc' },
 ]
 
-export default function Filterbar({ totalCount, countLabel, activeFilter, activeSort, onSortChange }: FilterbarProps) {
+export default function Filterbar({ totalCount, countLabel, activeFilter, sortActive=true, activeSort, onSortChange }: FilterbarProps) {
 
     const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        onSortChange(e.target.value);
+        if (sortActive){
+            onSortChange!(e.target.value);
+        }
     }
 
     return (
@@ -49,6 +52,8 @@ export default function Filterbar({ totalCount, countLabel, activeFilter, active
 
             <p className="w-full text-body-sm text-surface-400 font-DMSans-400">Showing {totalCount} {countLabel}</p>
 
+            {
+            sortActive ??
             <div className="flex px-3 py-2 gap-1 border border-primary-300 rounded-xl items-center text-body-sm text-surface-400 font-DMSans-400">
                 <label htmlFor="sort-select" className="leading-none">Sort</label>
                 <select id="sort-select" value={activeSort} onChange={handleSort} className="leading-none">
@@ -56,7 +61,7 @@ export default function Filterbar({ totalCount, countLabel, activeFilter, active
                         <option key={sort.value} value={sort.value} className="leading-none">{sort.label}</option>
                     ))}
                 </select>
-            </div>
+            </div>}
         </div>
     )
 }

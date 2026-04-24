@@ -1,12 +1,16 @@
 import ShopPage from "@/components/ShopPage";
 import { getNGOs, getProductsByRange } from "@/utils/supabase/database";
 import type { Tables } from "@/types/supabase";
-import { SearchParams } from "next/dist/server/request/search-params";
 
 const PAGE_SIZE = 12;
 
 type ProductsType = {
     data: Array<Tables<'products'>>;
+    count: number | null;
+}
+
+type NGOsType = {
+    data: Array<Tables<'ngos'>>;
     count: number | null;
 }
 
@@ -33,7 +37,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
     const { column, ascending } = SORT_MAP[sortVal as keyof typeof SORT_MAP] ?? SORT_MAP["latest"];
 
     const { data: products, count }: ProductsType = await getProductsByRange({ from, to, filterVal, column, ascending, searchVal });
-    const ngos: Array<Tables<'ngos'>> = await getNGOs();
+    const {data: ngos, count: _}: NGOsType = await getNGOs({});
     const ngoNameById = new Map(ngos.map((ngo) => [ngo.id, ngo.name]));
 
     const totalPages = Math.ceil((count ?? 0) / PAGE_SIZE);

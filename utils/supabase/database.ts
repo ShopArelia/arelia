@@ -21,6 +21,8 @@ type getNGOsType = {
     cause?: string;
     id?: string;
     limit?: number;
+    from?: number;
+    to?: number;
 }
 
 type getBlogsType = {
@@ -81,9 +83,13 @@ export async function getProductsByRange({from, to, filterVal, column, ascending
     return { data, count };
 }
 
-export async function getNGOs({name, cause, limit}: getNGOsType = {}) {
+export async function getNGOs({name, cause, limit, from, to}: getNGOsType) {
     const supabase = await getSupabase();
-    let query = supabase.from('ngos').select();
+    let query = supabase.from('ngos').select(`*, products(count)`,{ count: "exact" });
+
+    if (from && to) {
+        query = query.range(from, to);
+    }
 
     if (name) {
         query = query.ilike('name', `%${name}%`);
@@ -97,11 +103,11 @@ export async function getNGOs({name, cause, limit}: getNGOsType = {}) {
         query = query.limit(limit);
     }
 
-    const { data, error } = await query;
+    const { data, count, error } = await query;
 
     if (error) throw error;
 
-    return data;
+    return { data, count };
 }
 
 export async function getNGOsByID(id: string) {
