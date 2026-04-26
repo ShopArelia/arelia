@@ -152,3 +152,25 @@ export async function getBlogBySlug(slug: string) {
 
     return data;
 }
+
+export async function getAllCounts() {
+    const supabase = await getSupabase();
+
+    const ngos = await getNGOs({});
+
+    const [
+        { count: ngoCount },
+        { count: productCount },
+    ] = await Promise.all([
+        supabase.from("ngos").select("*", { count: "exact", head: true }),
+        supabase.from("products").select("*", { count: "exact", head: true }),
+    ])
+
+    const causeCount = new Set(ngos.data?.map(n => n.cause).filter(Boolean)).size;
+
+    return {
+        ngoCount: ngoCount,
+        productCount: productCount,
+        causeCount: causeCount,
+    }
+}
