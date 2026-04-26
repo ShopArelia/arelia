@@ -148,7 +148,7 @@ export async function getBlogBySlug(slug: string) {
     const supabase = await getSupabase();
     const { data, error } = await supabase.from('blogs').select().eq('slug', slug).single();
 
-    if (error) throw error;
+    if (error) return null;
 
     return data;
 }
