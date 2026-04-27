@@ -37,6 +37,12 @@ async function getSupabase() {
     return createClient(cookieStore);
 }
 
+export async function getUser() {
+    const supabase = await getSupabase();
+    const { data: { user } } = await supabase.auth.getUser();
+    return user;
+}
+
 export async function getProducts({title, ngoId, limit}: getProductsType = {}) {
     const supabase = await getSupabase();
     let query = supabase.from('products').select();

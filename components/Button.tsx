@@ -2,6 +2,8 @@ import Link from "next/link";
 import clsx from "clsx";
 import type { MouseEventHandler } from "react";
 
+export const buttonClass = "btn whitespace-nowrap text-body-sm font-DMSans-500";
+
 type ButtonProps = {
     variant?: 'primary' | 'ghost' | 'danger';
     disabled?: boolean;
@@ -17,7 +19,7 @@ export default function Button({text, variant = 'primary', disabled = false, new
         <Link 
             href={link}
             className={clsx(
-                'btn whitespace-nowrap text-body-sm font-DMSans-500',
+                buttonClass,
                 {
                     'btn-primary': variant === 'primary',
                     'btn-ghost': variant === 'ghost',

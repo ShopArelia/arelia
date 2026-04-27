@@ -17,8 +17,8 @@ export default async function Page() {
             {/* The Problem We're Solving */}
             <div className="flex flex-col px-16 py-24 gap-12 items-center justify-center">
                 <p className='text-body-sm font-DMSans-400 text-primary-300'>THE PROBLEM WE'RE SOLVING</p>
-                <h1 className='text-h1 font-DMSerif-Reg text-surface-400 text-center'>Nonprofits do extraordinary work.<br />Most people never <span className='font-DMSerif-Italic text-primary-300'>feel</span> it.</h1>
-                <p className='max-w-1/3 text-body font-DMSans-400 text-surface-300 text-center'>
+                <h1 className='text-h1 font-DMSerif-Reg text-surface-400 text-center leading-none'>Nonprofits do extraordinary work.<br />Most people never <span className='font-DMSerif-Italic text-primary-300'>feel</span> it.</h1>
+                <p className='max-w-1/3 text-body font-DMSans-400 text-surface-300 text-center leading-none'>
                     Donating to a cause is a moment. A transaction. You click a button,
                     money moves, and that's usually where the relationship ends. There's
                     no physical reminder of what you did, no ongoing connection to the work,
