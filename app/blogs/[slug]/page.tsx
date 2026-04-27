@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CopyButton from "@/components/CopyButton";
 import MaskedIcon from "@/components/MaskedIcon";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -29,7 +30,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
             {/* Blog Header */}
             <div className='flex px-16 py-30 items-center justify-center bg-primary-400'>
-                <div className="max-w-[1200px] w-full flex flex-col gap-6">
+                <div className="max-w-[800px] w-full flex flex-col gap-6">
                     <div className="flex gap-3 items-center">
                         <p className='text-body-sm font-DMSans-500 text-primary-100'>BLOG</p>
                         <MaskedIcon src="/icons/arrow-right-long.svg" size="14px" className="text-primary-200" />
@@ -47,8 +48,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
             {/* Blog Body */}
             <div className="flex px-16 py-24 items-center justify-center bg-white">
-                <div className="max-w-[1200px] flex flex-col gap-6">
+                <div className="max-w-[800px] w-full flex flex-col gap-6">
                     <div className="flex gap-6">
+                        <div className="sticky top-24 flex flex-col items-center px-1 py-2 gap-3">
+                            <p className="text-label text-surface-200 font-DMSans-500">SHARE</p>
+                            <CopyButton />
+                        </div>
                         <article className="prose prose-stone max-w-none
                             prose-headings:font-DMSerif-Reg prose-headings:text-display
                             prose-h1:text-h1 prose-h2:text-h2 prose-h3:text-h3
