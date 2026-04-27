@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Divider from "@/components/Divider";
 import CopyButton from "@/components/CopyButton";
 import MaskedIcon from "@/components/MaskedIcon";
+import ReadingProgress from "@/components/ReadingProgress";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { notFound } from "next/navigation";
@@ -49,10 +51,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             {/* Blog Body */}
             <div className="flex px-16 py-24 items-center justify-center bg-white">
                 <div className="max-w-[800px] w-full flex flex-col gap-6">
-                    <div className="flex gap-6">
+                    <div className="flex gap-10 items-start">
                         <div className="sticky top-24 flex flex-col items-center px-1 py-2 gap-3">
                             <p className="text-label text-surface-200 font-DMSans-500">SHARE</p>
                             <CopyButton />
+                            <ReadingProgress />
                         </div>
                         <article className="prose prose-stone max-w-none
                             prose-headings:font-DMSerif-Reg prose-headings:text-display
@@ -68,6 +71,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                             <Markdown remarkPlugins={[remarkGfm]}>{blog.content ?? ""}</Markdown>
                         </article>
                     </div>
+
+                    <Divider />
+
+                    <Link href="/blogs" className="flex px-3 gap-3 items-center">
+                        <MaskedIcon src="/icons/arrow-left-long.svg" size="14px" className="text-primary-400" />
+                        <p className='text-body-sm font-DMSans-400 text-primary-400 uppercase'>Back to all posts</p>
+                    </Link>
                 </div>
             </div>
 
