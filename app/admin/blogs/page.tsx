@@ -20,7 +20,7 @@ export default async function AdminBlogsPage() {
         </div>
 
         <Link
-          href="/admin/newBlog"
+          href="/admin/blogs/newBlog"
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-medium text-white bg-primary-300 shadow-[0_2px_0_#2D5016,0_4px_12px_rgba(45,80,22,0.25)] hover:shadow-[0_3px_0_#2D5016,0_6px_16px_rgba(45,80,22,0.3)] hover:-translate-y-px transition-all"
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
@@ -41,14 +41,14 @@ export default async function AdminBlogsPage() {
         <div className="flex flex-col divide-y divide-surface-100">
           {blogs?.length === 0 && (
             <p className="text-[14px] text-surface-300 py-12 text-center">
-              No posts yet. <Link href="/admin/newBlog" className="text-primary-300 underline underline-offset-2">Write your first one →</Link>
+              No posts yet. <Link href="/admin/blogs/newBlog" className="text-primary-300 underline underline-offset-2">Write your first one →</Link>
             </p>
           )}
 
           {blogs?.map((blog) => (
             <Link
               key={blog.id}
-              href={`/admin/editBlog/${blog.slug}`}
+              href={`/admin/blogs/editBlog/${blog.slug}`}
               className="group flex items-start justify-between gap-6 py-5 hover:bg-primary-50 -mx-4 px-4 rounded-[10px] transition-colors"
             >
               <div className="min-w-0">
