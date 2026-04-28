@@ -14,11 +14,13 @@ export default async function EditBlogPage({ params }: { params: Promise<{ slug:
     <BlogEditor
       mode="edit"
       initialData={{
-        id:      blog.id,
-        title:   blog.title,
-        slug:    blog.slug,
+        id: blog.id,
+        title: blog.title,
+        slug: blog.slug,
         excerpt: blog.excerpt ?? "",
         content: blog.content ?? "",
+        author: blog.author ?? "",
+        read_time: blog.read_time ?? 1,
       }}
     />
   );

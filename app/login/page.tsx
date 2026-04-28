@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
         </div>
  
         {/* Card */}
-        <div className="bg-surface-50 rounded-[14px] p-8 shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
+        <div className="bg-surface-50 rounded-lg p-8 shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
           <h1 className="font-serif text-[22px] font-normal tracking-[-0.01em] text-surface-400 mb-1">
             Admin sign in
           </h1>
@@ -66,7 +66,7 @@ export default function AdminLoginPage() {
                 id="email" type="email" value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@arelia.org" required
-                className="px-3.5 py-2.5 text-[14px] border border-surface-100 rounded-[10px] bg-white text-surface-400 outline-none placeholder:text-surface-200 focus:border-primary-300 focus:ring-[3px] focus:ring-primary-300/10 transition-all"
+                className="px-3.5 py-2.5 text-[14px] border border-surface-100 rounded-md] bg-white text-surface-400 outline-none placeholder:text-surface-200 focus:border-primary-300 focus:ring-[3px] focus:ring-primary-300/10 transition-all"
               />
             </div>
  
@@ -78,7 +78,7 @@ export default function AdminLoginPage() {
                 id="password" type="password" value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••" required
-                className="px-3.5 py-2.5 text-[14px] border border-surface-100 rounded-[10px] bg-white text-surface-400 outline-none placeholder:text-surface-200 focus:border-primary-300 focus:ring-[3px] focus:ring-primary-300/10 transition-all"
+                className="px-3.5 py-2.5 text-[14px] border border-surface-100 rounded-md bg-white text-surface-400 outline-none placeholder:text-surface-200 focus:border-primary-300 focus:ring-[3px] focus:ring-primary-300/10 transition-all"
               />
             </div>
  

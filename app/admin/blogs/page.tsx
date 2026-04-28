@@ -49,7 +49,7 @@ export default async function AdminBlogsPage() {
             <Link
               key={blog.id}
               href={`/admin/blogs/editBlog/${blog.slug}`}
-              className="group flex items-start justify-between gap-6 py-5 hover:bg-primary-50 -mx-4 px-4 rounded-[10px] transition-colors"
+              className="group flex items-start justify-between gap-6 py-5 hover:bg-primary-50 -mx-4 px-4 rounded-md transition-colors"
             >
               <div className="min-w-0">
                 <h2 className="text-[15px] font-medium text-surface-400 group-hover:text-primary-300 transition-colors truncate">

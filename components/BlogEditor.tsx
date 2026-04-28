@@ -224,7 +224,7 @@ export default function BlogEditor({ mode, initialData }: BlogEditorProps) {
           />
         ) : (
           <div className="flex-1 overflow-y-auto px-12 py-10 bg-surface-50">
-            <article className="max-w-[680px] mx-auto prose prose-stone max-w-none prose-headings:font-serif prose-headings:font-normal prose-headings:tracking-tight prose-h1:text-[28px] prose-h2:text-[22px] prose-h3:text-[18px] prose-a:text-primary-300 prose-a:underline-offset-[3px] hover:prose-a:text-primary-400 prose-blockquote:border-l-primary-200 prose-blockquote:bg-primary-50 prose-blockquote:rounded-r-[10px] prose-blockquote:text-primary-400 prose-blockquote:font-serif prose-blockquote:not-italic prose-hr:border-surface-100 prose-strong:font-medium prose-img:rounded-[10px]">
+            <article className="max-w-[680px] mx-auto prose prose-stone prose-headings:font-serif prose-headings:font-normal prose-headings:tracking-tight prose-h1:text-[28px] prose-h2:text-[22px] prose-h3:text-[18px] prose-a:text-primary-300 prose-a:underline-offset-[3px] hover:prose-a:text-primary-400 prose-blockquote:border-l-primary-200 prose-blockquote:bg-primary-50 prose-blockquote:rounded-r-md prose-blockquote:text-primary-400 prose-blockquote:font-serif prose-blockquote:not-italic prose-hr:border-surface-100 prose-strong:font-medium prose-img:rounded-m">
               {title   && <h1 className="not-prose font-serif text-[32px] font-normal mb-2">{title}</h1>}
               {author  && <p className="not-prose text-[13px] text-surface-200 mb-6">By {author} · {readTime} min read</p>}
               {excerpt && <p className="not-prose text-surface-300 italic mb-8 text-[15px]">{excerpt}</p>}
