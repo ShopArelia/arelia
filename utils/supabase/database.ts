@@ -32,7 +32,7 @@ type getBlogsType = {
     to?: number;
 }
 
-async function getSupabase() {
+export async function getSupabase() {
     const cookieStore = await cookies();
     return createClient(cookieStore);
 }

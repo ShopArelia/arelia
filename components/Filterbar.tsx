@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Button from "./Button";
+import { Cause } from "@/data/causes";
 
 type FilterbarProps = {
     totalCount: number;
@@ -24,8 +25,7 @@ export type SortOption = {
 
 const FILTERS: FilterOption[] = [
     { label: "All", value: 'all' },
-    { label: "Environment", value: 'Environment' },
-    { label: "Wildlife", value: 'Wildlife' },
+    ...Cause
 ]
 
 const SORTS: SortOption[] = [
@@ -53,7 +53,7 @@ export default function Filterbar({ totalCount, countLabel, activeFilter, sortAc
             <p className="w-full text-body-sm text-surface-400 font-DMSans-400">Showing {totalCount} {countLabel}</p>
 
             {
-            sortActive ??
+            sortActive ?
             <div className="flex px-3 py-2 gap-1 border border-primary-300 rounded-xl items-center text-body-sm text-surface-400 font-DMSans-400">
                 <label htmlFor="sort-select" className="leading-none">Sort</label>
                 <select id="sort-select" value={activeSort} onChange={handleSort} className="leading-none">
@@ -61,7 +61,7 @@ export default function Filterbar({ totalCount, countLabel, activeFilter, sortAc
                         <option key={sort.value} value={sort.value} className="leading-none">{sort.label}</option>
                     ))}
                 </select>
-            </div>}
+            </div> : null}
         </div>
     )
 }
