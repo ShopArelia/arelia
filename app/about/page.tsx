@@ -11,7 +11,7 @@ export default async function Page() {
             <div className='flex flex-col px-16 py-30 gap-6 items-start justify-between bg-primary-400'>
                 <p className='text-body-sm font-DMSans-400 text-primary-200'>OUR STORY</p>
                 <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>Shopping that means something <span className='font-DMSerif-Italic'>more</span></p>
-                <p className='max-w-1/2 text-body font-DMSans-400 text-primary-100 text-wrap'>Arelia started with a simple frustration - it was too hard to support the causes you care about through the things you already buy. We built the bridge that was missing.</p>
+                <p className='max-w-1/2 text-body font-DMSans-400 text-primary-100 text-wrap'>Arelia was founded with a simple vision; to create a marketplace showcasing merchandise from nonprofits around the world.</p>
             </div>
 
             {/* The Problem We're Solving */}

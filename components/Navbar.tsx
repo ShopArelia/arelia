@@ -18,7 +18,7 @@ export default function Navbar() {
             </Link>
 
             <div className="flex w-fit gap-6">
-                <Link className={`text-body ${pathname === '/shop' ? 'font-DMSans-500 text-primary-400' : 'font-DMSans-400 text-primary-300'}`} href="/shop">Browse</Link>
+                <Link className={`text-body ${pathname === '/shop' ? 'font-DMSans-500 text-primary-400' : 'font-DMSans-400 text-primary-300'}`} href="/shop">Shop</Link>
                 <Link className={`text-body ${pathname === '/nonprofits' ? 'font-DMSans-500 text-primary-400' : 'font-DMSans-400 text-primary-300'}`} href='/nonprofits'>Nonprofits</Link>
                 <Link className={`text-body ${pathname === '/blogs' ? 'font-DMSans-500 text-primary-400' : 'font-DMSans-400 text-primary-300'}`} href='/blogs'>Blog</Link>
                 <Link className={`text-body ${pathname === '/about' ? 'font-DMSans-500 text-primary-400' : 'font-DMSans-400 text-primary-300'}`} href='/about'>About</Link>
