@@ -14,12 +14,12 @@ export default function Footer() {
                     </Link>
                     <p className="text-body-sm text-surface-200 font-DMSans-400">A marketplace where every purchase supports a verified nonprofit. Shop with purpose.</p>
                     <div className="flex gap-3">
-                        <Link href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="w-[36px] h-[36px] flex items-center justify-center border-2 rounded-md border-surface-300">
+                        <Link href="https://www.instagram.com/areliaforgood" target="_blank" rel="noopener noreferrer" className="w-[36px] h-[36px] flex items-center justify-center border-2 rounded-md border-surface-300">
                             <MaskedIcon src="/icons/instagram.svg" size="24px" className="text-primary-200" />
                         </Link>
-                        <Link href="https://www.x.com" target="_blank" rel="noopener noreferrer" className="w-[36px] h-[36px] flex items-center justify-center border-2 rounded-md border-surface-300">
+                        {/* <Link href="https://www.x.com" target="_blank" rel="noopener noreferrer" className="w-[36px] h-[36px] flex items-center justify-center border-2 rounded-md border-surface-300">
                             <MaskedIcon src="/icons/x-twitter.svg" size="24px" className="text-primary-200" />
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
 
