@@ -41,6 +41,9 @@
   --shadow-danger-hover: 0 3px 0 #7a3310, 0 6px 16px rgba(200,90,26,0.3);
   --shadow-danger-active: 0 1px 0 #7a3310, 0 2px 6px rgba(200,90,26,0.2);
   --shadow-lg: 0 8px 32px rgba(26,26,24,0.14), 0 2px 8px rgba(26,26,24,0.08);
+
+  /* Breakpoints */
+  --breakpoint-laptop: 1024px;
 }
 
 @theme {
