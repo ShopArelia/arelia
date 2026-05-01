@@ -106,7 +106,7 @@ export default async function Page() {
             </div>
 
             {/* How It Works */}
-            <div className="flex flex-col px-16 py-24 gap-12 items-start bg-white">
+            <div id="how-it-works" className="flex flex-col px-16 py-24 gap-12 items-start bg-white">
                 <p className='text-body-sm font-DMSans-400 text-primary-300'>HOW IT WORKS</p>
                 <h1 className='text-h1 font-DMSerif-Reg text-surface-400'>We connect the dots.<br /><span className='font-DMSerif-Italic'>You keep the product.</span></h1>
 
