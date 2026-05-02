@@ -44,7 +44,7 @@ export default function Filterbar({ totalCount, countLabel, activeFilter, sortAc
 
     return (
         <div className="w-full flex flex-col md:flex-row px-4 md:px-16 py-3 gap-6 items-center">
-            <div className="flex w-full gap-6 py-1 items-center overflow-x-auto ">
+            <div className="flex w-full overflow-x-auto md:w-fit md:overflow-x-visible gap-6 py-1 items-center">
                 {FILTERS.map((filter) => (
                     <Button key={filter.value} text={filter.label} variant={activeFilter === filter.value ? 'primary' : 'ghost'} link={`/shop?page=1&sort=${activeSort}&filter=${filter.value}`} />
                 ))}

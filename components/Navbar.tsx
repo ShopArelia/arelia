@@ -60,7 +60,7 @@ export default function Navbar() {
                     ))}
 
                     <div className="pt-3">
-                        <Button text="Get Involved" link="/contact" classN="flex !justify-start" />
+                        <Button text="Get Involved" link="/contact" classN="flex !justify-start" onClick={() => setMenuOpen((prev) => !prev)} />
                     </div>
                 </div>
             )}

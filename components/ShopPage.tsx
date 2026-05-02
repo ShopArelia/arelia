@@ -85,7 +85,7 @@ export default function ShopPage({ products, count, currentPage, totalPages, fil
             <Divider />
 
             {/* Shop Page */}
-            <div className="w-full flex flex-col px-16 py-24 gap-16 items-center justify-center">
+            <div className="w-full flex flex-col px-8 py-12 md:px-16 md:py-24 gap-16 items-center justify-center">
                 <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] place-items-center gap-16 ">
                     {products.map((product) => (
                         <ProductCard key={product.id} product={product} ngoName={product.ngoName} />

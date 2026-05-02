@@ -4,11 +4,12 @@ import { notFound } from "next/navigation";
  
 type EditProductProps = { params: { id: string } };
  
-export default async function EditProductPage({ params }: EditProductProps) {
+export default async function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
   const supabase = await getSupabase();
  
   const [{ data: product }, { data: ngos }] = await Promise.all([
-    supabase.from("products").select("*").eq("id", params.id).single(),
+    supabase.from("products").select("*").eq("id", id).single(),
     supabase.from("ngos").select("id, name").order("name"),
   ]);
  
