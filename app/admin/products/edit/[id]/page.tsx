@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 type EditProductProps = { params: { id: string } };
  
 export default async function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
+  const { id } = await params;
   const supabase = await getSupabase();
  
   const [{ data: product }, { data: ngos }] = await Promise.all([

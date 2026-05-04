@@ -4,10 +4,10 @@ import NGOEditor from "@/components/NGOEditor";
 
 type EditNGOProps = { params: { id: string } };
  
-export default async function EditNGOPage({ params }: EditNGOProps) {
+export default async function EditNGOPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const supabase = await getSupabase();
-  const { data: ngo } = await supabase
-    .from("ngos").select("*").eq("id", params.id).single();
+  const { data: ngo } = await supabase.from("ngos").select("*").eq("id", id).single();
  
   if (!ngo) notFound();
  
