@@ -65,11 +65,6 @@ export default async function AdminDashboard() {
       {/* ── Top bar ── */}
       <header className="h-[60px] bg-white border-b border-surface-100 flex items-center justify-between px-8 sticky top-0 z-50">
         <div className="flex items-center gap-2.5">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-            <path d="M12 2C8 2 5 5 5 9c0 2.5 1.2 4.7 3 6.1V17h8v-1.9c1.8-1.4 3-3.6 3-6.1 0-4-3-7-7-7z"/>
-            <circle cx="7" cy="4" r="1.5" fill="currentColor" stroke="none"/>
-            <circle cx="17" cy="4" r="1.5" fill="currentColor" stroke="none"/>
-          </svg>
           <span className="font-serif text-[1rem] text-surface-400">Arelia</span>
           <span className="text-surface-200 mx-0.5">/</span>
           <span className="text-[13px] font-medium text-surface-300">Admin</span>
@@ -106,7 +101,7 @@ export default async function AdminDashboard() {
           {sections.map(({ href, newHref, label, count, unit, description, icon }) => (
             <div
               key={href}
-              className="bg-white border border-surface-100 rounded-lg p-6 flex items-center gap-6 hover:border-primary-200 hover:shadow-[0_2px_0_#D4EAC8,0_4px_12px_rgba(45,80,22,0.08)] transition-all group"
+              className="bg-white border border-surface-100 rounded-lg p-6 flex flex-col md:flex-row items-center gap-6 hover:border-primary-200 hover:shadow-[0_2px_0_#D4EAC8,0_4px_12px_rgba(45,80,22,0.08)] transition-all group"
             >
               {/* Icon */}
               <div className="w-12 h-12 rounded-md bg-primary-50 border border-primary-100 flex items-center justify-center text-primary-300 shrink-0 group-hover:bg-primary-100 transition-colors">
