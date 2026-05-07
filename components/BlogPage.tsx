@@ -61,7 +61,7 @@ export default function BlogPage({ blogs, count, currentPage, totalPages }: Blog
             <Divider />
 
             {/* Blogs */}
-            <div className="w-full flex flex-col px-16 py-24 gap-16 items-center justify-center">
+            <div className="w-full flex flex-col px-8 py-12 md:px-16 md:py-24 gap-16 items-center justify-center">
                 <div className="w-full flex flex-col gap-6 item-center justify-center">
                     {blogs.map((blog, index) => (
                         <Fragment key={blog.id}>

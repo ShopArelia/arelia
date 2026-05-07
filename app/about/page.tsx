@@ -8,17 +8,17 @@ export default async function Page() {
         <div className="w-full flex flex-col">
 
             {/* Our Story */}
-            <div className='flex flex-col px-16 py-30 gap-6 items-start justify-between bg-primary-400'>
-                <p className='text-body-sm font-DMSans-400 text-primary-200'>OUR STORY</p>
-                <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>Shopping that means something <span className='font-DMSerif-Italic'>more</span></p>
-                <p className='max-w-1/2 text-body font-DMSans-400 text-primary-100 text-wrap'>Arelia was founded with a simple vision; to create a marketplace showcasing merchandise from nonprofits around the world.</p>
+            <div className='flex flex-col px-16 py-30 gap-6 items-center md:items-start justify-between bg-primary-400'>
+                <p className='text-body-sm font-DMSans-400 text-primary-200 text-center md:text-left'>OUR STORY</p>
+                <p className='text-display font-DMSerif-Reg text-primary-50 leading-none text-center md:text-left'>Shopping that means something <span className='font-DMSerif-Italic'>more</span></p>
+                <p className='md:max-w-1/2 text-body font-DMSans-400 text-primary-100 text-wrap text-center md:text-left'>Arelia was founded with a simple vision; to create a marketplace showcasing merchandise from nonprofits around the world.</p>
             </div>
 
             {/* The Problem We're Solving */}
-            <div className="flex flex-col px-16 py-24 gap-12 items-center justify-center">
+            <div className="flex flex-col px-8 py-12 md:px-16 md:py-24 gap-12 items-center justify-center">
                 <p className='text-body-sm font-DMSans-400 text-primary-300'>THE PROBLEM WE'RE SOLVING</p>
                 <h1 className='text-h1 font-DMSerif-Reg text-surface-400 text-center leading-none'>Nonprofits do extraordinary work.<br />Most people never <span className='font-DMSerif-Italic text-primary-300'>feel</span> it.</h1>
-                <p className='max-w-1/3 text-body font-DMSans-400 text-surface-300 text-center leading-none'>
+                <p className='md:max-w-1/3 text-body font-DMSans-400 text-surface-300 text-center leading-none'>
                     Donating to a cause is a moment. A transaction. You click a button,
                     money moves, and that's usually where the relationship ends. There's
                     no physical reminder of what you did, no ongoing connection to the work,
@@ -38,7 +38,7 @@ export default async function Page() {
             <Divider />
 
             {/* What We Believe */}
-            <div className="flex px-16 py-24 gap-12 items-start bg-white">
+            <div className="flex flex-col md:flex-row px-8 py-12 md:px-16 md:py-24 gap-12 items-start bg-white">
                 <div className="w-full flex flex-col gap-12">
                     <p className='text-body-sm font-DMSans-400 text-primary-300'>WHAT WE BELIEVE</p>
                     <h1 className='text-h1 font-DMSerif-Reg text-surface-400'>Purpose and quality<br />aren't <span className='font-DMSerif-Italic'>opposites.</span></h1>
@@ -83,22 +83,25 @@ export default async function Page() {
                 </div>
             </div>
 
-            <div className="flex px-16 py-12 gap-12 bg-primary-400 items-stretch justify-center">
+            <div className="flex flex-col md:flex-row px-8 md:px-16 py-12 gap-12 bg-primary-400 items-stretch justify-center">
                 <div className="w-full flex flex-col gap-3 items-center justify-center">
                     <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>{counts.ngoCount}</p>
                     <p className='text-body font-DMSans-400 text-primary-100'>Verified nonprofit partners</p>
                 </div>
-                <div className={`w-px bg-primary-200`} />
+                <div className={`h-px bg-primary-200 md:hidden`} />
+                <div className={`w-px bg-primary-200 hidden md:block`} />
                 <div className="w-full flex flex-col gap-3 items-center justify-center">
                     <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>{counts.productCount}</p>
                     <p className='text-body font-DMSans-400 text-primary-100'>Products listed</p>
                 </div>
-                <div className={`w-px bg-primary-200`} />
+                <div className={`h-px bg-primary-200 md:hidden`} />
+                <div className={`w-px bg-primary-200 hidden md:block`} />
                 <div className="w-full flex flex-col gap-3 items-center justify-center">
                     <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>{counts.causeCount}</p>
                     <p className='text-body font-DMSans-400 text-primary-100'>Causes covered</p>
                 </div>
-                <div className={`w-px bg-primary-200`} />
+                <div className={`h-px bg-primary-200 md:hidden`} />
+                <div className={`w-px bg-primary-200 hidden md:block`} />
                 <div className="w-full flex flex-col gap-3 items-center justify-center">
                     <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>$0</p>
                     <p className='text-body font-DMSans-400 text-primary-100'>Commission on every sale</p>
@@ -106,11 +109,11 @@ export default async function Page() {
             </div>
 
             {/* How It Works */}
-            <div id="how-it-works" className="flex flex-col px-16 py-24 gap-12 items-start bg-white">
-                <p className='text-body-sm font-DMSans-400 text-primary-300'>HOW IT WORKS</p>
-                <h1 className='text-h1 font-DMSerif-Reg text-surface-400'>We connect the dots.<br /><span className='font-DMSerif-Italic'>You keep the product.</span></h1>
+            <div id="how-it-works" className="flex flex-col px-8 py-12 md:px-16 md:py-24 gap-12 items-center md:items-start bg-white">
+                <p className='text-body-sm font-DMSans-400 text-primary-300 text-center md:text-left'>HOW IT WORKS</p>
+                <h1 className='text-h1 font-DMSerif-Reg text-surface-400 text-center md:text-left'>We connect the dots.<br /><span className='font-DMSerif-Italic'>You keep the product.</span></h1>
 
-                <div className="w-full flex gap-12">
+                <div className="w-full flex flex-col md:flex-row gap-12">
                     <div className="flex flex-col gap-3">
                         <h1 className='text-h1 font-DMSerif-Reg text-primary-200 leading-none'>01</h1>
                         <h1 className='text-h1 font-DMSerif-Reg text-surface-400'>We find and vet</h1>

@@ -33,10 +33,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             {/* Blog Header */}
             <div className='flex px-16 py-30 items-center justify-center bg-primary-400'>
                 <div className="max-w-[800px] w-full flex flex-col gap-6">
-                    <div className="flex gap-3 items-center">
+                    <div className="flex gap-3 md:items-center">
                         <p className='text-body-sm font-DMSans-500 text-primary-100'>BLOG</p>
-                        <MaskedIcon src="/icons/arrow-right-long.svg" size="14px" className="text-primary-200" />
-                        <p className='text-body-sm font-DMSans-400 text-primary-200 uppercase'>{blog.title}</p>
+                        <MaskedIcon src="/icons/arrow-right-long.svg" size="14px" className="text-primary-200 hidden md:block" />
+                        <p className='text-body-sm font-DMSans-400 text-primary-200 uppercase hidden md:block'>{blog.title}</p>
                     </div>
                     <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>{blog.title}</p>
                     <p className='text-body font-DMSans-400 text-primary-100 text-wrap'>{blog.excerpt}</p>
@@ -49,10 +49,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             </div>
 
             {/* Blog Body */}
-            <div className="flex px-16 py-24 items-center justify-center bg-white">
+            <div className="flex px-8 py-12 md:px-16 md:py-24 items-center justify-center bg-white">
                 <div className="max-w-[800px] w-full flex flex-col gap-6">
                     <div className="flex gap-10 items-start">
-                        <div className="sticky top-24 flex flex-col items-center px-1 py-2 gap-3">
+                        <div className="sticky top-24 md:flex flex-col items-center px-1 py-2 gap-3 hidden">
                             <p className="text-label text-surface-200 font-DMSans-500">SHARE</p>
                             <CopyButton />
                             <ReadingProgress />
