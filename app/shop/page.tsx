@@ -1,5 +1,5 @@
 import ShopPage from "@/components/ShopPage";
-import { getNGOs, getProductsByRange } from "@/utils/supabase/database";
+import { getNGOs, getProductsByRange, getAllCounts } from "@/utils/supabase/database";
 import type { Tables } from "@/types/supabase";
 
 const PAGE_SIZE = 12;
@@ -47,5 +47,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
         ngoName: ngoNameById.get(product.ngo_id) ?? "",
     }));
 
-    return <ShopPage products={shopProducts ?? []} count={count ?? 0} currentPage={pageNumber} totalPages={totalPages} filter={filterVal} sort={sortVal} />
+    const { ngoCount, productCount, causeCount } = await getAllCounts();
+
+    return <ShopPage products={shopProducts ?? []} count={count ?? 0} currentPage={pageNumber} totalPages={totalPages} filter={filterVal} sort={sortVal} ngoCount={ngoCount} productCount={productCount} />
 }

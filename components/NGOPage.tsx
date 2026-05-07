@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import Header from "./Header";
@@ -18,9 +18,11 @@ type NGOsPageProps = {
     currentPage: number;
     totalPages: number;
     filter: string;
+    ngoCount: number | null;
+    causeCount: number | null;
 }
 
-export default function NGOPage({ ngos, count, currentPage, totalPages, filter }: NGOsPageProps) {
+export default function NGOPage({ ngos, count, currentPage, totalPages, filter, ngoCount, causeCount }: NGOsPageProps) {
     const searchParams = useSearchParams();
     const router = useRouter();
 
@@ -56,8 +58,8 @@ export default function NGOPage({ ngos, count, currentPage, totalPages, filter }
         <div className="flex flex-col items-center bg-white">
             <Header
                 title="Nonprofit directory"
-                description="30 nonprofits across 5 causes"
-                inputPlaceholder="Search products..."
+                description={`${ngoCount} nonprofits across ${causeCount} causes`}
+                inputPlaceholder="Search nonprofits..."
                 text={text}
                 onChange={setText}
             />
@@ -66,18 +68,22 @@ export default function NGOPage({ ngos, count, currentPage, totalPages, filter }
 
             <Filterbar
                 totalCount={count}
-                countLabel="Products"
+                countLabel="Nonprofits"
                 activeFilter={filter}
                 sortActive={false}
+                path="nonprofits"
             />
 
             <Divider />
 
             {/* NGOs */}
-            <div className="w-full flex flex-col px-16 py-24 gap-16 items-center justify-center">
+            <div className="w-full flex flex-col px-8 py-12 md:px-16 md:py-24 gap-16 items-center justify-center">
                 <div className="w-full flex flex-col item-center justify-center">
-                    {ngos.map((ngo) => (
-                        <NGOCard key={ngo.id} ngo={ngo} />
+                    {ngos.map((ngo, index) => (
+                        <Fragment key={ngo.id}>
+                            <NGOCard ngo={ngo} />
+                            {index < ngos.length - 1 ? <Divider /> : null}
+                        </Fragment>
                     ))}
                 </div>
 

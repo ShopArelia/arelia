@@ -11,6 +11,7 @@ type FilterbarProps = {
     sortActive?: boolean;
     activeSort?: string;
     onSortChange?: (value: string) => void;
+    path: string;
 }
 
 export type FilterOption = {
@@ -34,7 +35,7 @@ const SORTS: SortOption[] = [
     { label: "Price: high to low", value: 'price-desc' },
 ]
 
-export default function Filterbar({ totalCount, countLabel, activeFilter, sortActive=true, activeSort, onSortChange }: FilterbarProps) {
+export default function Filterbar({ totalCount, countLabel, activeFilter, sortActive=true, activeSort, onSortChange, path }: FilterbarProps) {
 
     const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
         if (sortActive){
@@ -46,12 +47,12 @@ export default function Filterbar({ totalCount, countLabel, activeFilter, sortAc
         <div className="w-full flex flex-col md:flex-row px-4 md:px-16 py-3 gap-6 items-center">
             <div className="flex w-full overflow-x-auto md:w-fit md:overflow-x-visible gap-6 py-1 items-center">
                 {FILTERS.map((filter) => (
-                    <Button key={filter.value} text={filter.label} variant={activeFilter === filter.value ? 'primary' : 'ghost'} link={`/shop?page=1&sort=${activeSort}&filter=${filter.value}`} />
+                    <Button key={filter.value} text={filter.label} variant={activeFilter === filter.value ? 'primary' : 'ghost'} link={`/${path}?page=1${sortActive ? "&sort="+activeSort : ""}&filter=${filter.value}`} />
                 ))}
             </div>
 
             <div className="flex w-full items-center justify-between">
-                <p className="w-full text-body-sm text-surface-400 font-DMSans-400">Showing {totalCount} {countLabel}</p>
+                <p className="w-full text-body-sm text-surface-400 font-DMSans-400 text-center md:text-left">Showing {totalCount} {countLabel}</p>
 
                 {
                 sortActive ?

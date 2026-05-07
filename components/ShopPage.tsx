@@ -21,9 +21,11 @@ type ShopPageProps = {
     totalPages: number;
     filter: string;
     sort: string;
+    ngoCount: number | null;
+    productCount: number | null;
 };
 
-export default function ShopPage({ products, count, currentPage, totalPages, filter, sort }: ShopPageProps) {
+export default function ShopPage({ products, count, currentPage, totalPages, filter, sort, ngoCount, productCount }: ShopPageProps) {
     const searchParams = useSearchParams();
     const router = useRouter();
     
@@ -66,7 +68,7 @@ export default function ShopPage({ products, count, currentPage, totalPages, fil
         <div className="flex flex-col items-center bg-white">
             <Header
                 title="Shop"
-                description="320 products from 30 verified nonprofits"
+                description={`${productCount} products from ${ngoCount} verified nonprofits`}
                 inputPlaceholder="Search products..."
                 text={text}
                 onChange={setText}
@@ -80,6 +82,7 @@ export default function ShopPage({ products, count, currentPage, totalPages, fil
                 activeFilter={filter}
                 activeSort={sort}
                 onSortChange={handleSort}
+                path="shop"
             />
 
             <Divider />

@@ -6,7 +6,7 @@ import Button from '@/components/Button';
 import ProductCard from '@/components/ProductCard';
 import Divider from '@/components/Divider';
 
-import { getProducts, getNGOs, getBlogs } from '@/utils/supabase/database';
+import { getProducts, getNGOs, getBlogs, getAllCounts } from '@/utils/supabase/database';
 import type { Tables } from '@/types/supabase';
 import BlogPost from '@/components/BlogPost';
 
@@ -20,12 +20,15 @@ type BlogsType = {
     count: number | null;
 }
 
+const showNgoCount = 6;
+
 export default async function Page() {
-  const products: Array<Tables<'products'>> = await getProducts({ limit: 7});
+  const products: Array<Tables<'products'>> = await getProducts({ limit: 7 });
   const {data: ngos, count: _}: NGOsType = await getNGOs({});
   const {data: blogs, count: __}: BlogsType = await getBlogs({ limit: 2 });
+  const { ngoCount, productCount, causeCount } = await getAllCounts();
   const ngoNameById = new Map(ngos.map((ngo) => [ngo.id, ngo.name]));
-  const featuredNgos = ngos.slice(0, 6);
+  const featuredNgos = ngos.slice(0, showNgoCount);
 
   return (
     <div className='w-full'>
@@ -44,17 +47,17 @@ export default async function Page() {
 
         <div className='flex gap-12 flex-col md:flex-row'>
           <div className='flex flex-col gap-3 items-center justify-center'>
-            <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>48</p>
+            <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>{ngoCount}</p>
             <p className='text-body font-DMSans-400 text-primary-100'>Nonprofits</p>
           </div>
           <div className='hidden md:block w-px bg-primary-200' />
           <div className='flex flex-col gap-3 items-center justify-center'>
-            <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>320+</p>
+            <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>{productCount}</p>
             <p className='text-body font-DMSans-400 text-primary-100'>Products</p>
           </div>
           <div className='hidden md:block w-px bg-primary-200' />
           <div className='flex flex-col gap-3 items-center justify-center'>
-            <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>12</p>
+            <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>{causeCount}</p>
             <p className='text-body font-DMSans-400 text-primary-100'>Causes</p>
           </div>
         </div>
@@ -65,7 +68,7 @@ export default async function Page() {
         <div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
           <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Featured products</h1>
           <Link className='flex gap-1 items-center justify-center' href='/shop'>
-            <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all 320</p>
+            <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all {productCount}</p>
             <Image src='./icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
           </Link>
         </div>
@@ -109,7 +112,7 @@ export default async function Page() {
         <div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
           <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Nonprofits we support</h1>
           <Link className='flex gap-1 items-center justify-center' href='/nonprofits'>
-            <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all 30</p>
+            <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all {ngoCount}</p>
             <Image src='./icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
           </Link>
         </div>
@@ -125,7 +128,7 @@ export default async function Page() {
           <div className='flex flex-col md:flex-row items-baseline justify-center gap-2'>
             <p className='text-body font-DMSans-400 text-surface-300'>and 24 more verified organizations.</p>
             <Link className='flex h-fit gap-1 items-center justify-center' href='/nonprofits'>
-              <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all 30</p>
+              <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all {ngoCount ? (ngoCount - showNgoCount) : "nonprofits"}</p>
               <Image src='./icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
             </Link>
           </div>

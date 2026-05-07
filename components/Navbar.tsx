@@ -28,7 +28,7 @@ export default function Navbar() {
 
             <div className="flex px-6 py-4 items-center justify-between">
 
-                <Link className="flex items-center justify-center gap-2 font-DMSerif-Reg text-h2 text-primary-400 leading-none" href="/">
+                <Link className="flex items-center justify-center gap-2 font-DMSerif-Reg text-h2 text-primary-400 leading-none" onClick={() => setMenuOpen(false)} href="/">
                     <MaskedIcon src="/web_logo.svg" size="36px" className="text-primary-400" />
                     Arelia
                 </Link>

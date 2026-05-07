@@ -14,7 +14,7 @@ export default function Header({ title, description, inputPlaceholder, text, onC
     return (
         <div className="w-full flex flex-col md:flex-row px-16 py-24 gap-6 justify-between items-center">
             <div className="flex flex-col items-center md:items-start gap-6">
-                <p className="text-display text-surface-400 font-DMSerif-Reg leading-none">{title}</p>
+                <p className="text-display text-surface-400 font-DMSerif-Reg leading-none text-center md:text-left">{title}</p>
                 <p className="text-body text-surface-300 font-DMSans-400 leading-none text-center md:text-left">{description}</p>
             </div>
             <div className="flex items-center justify-center px-4 py-2 gap-3 rounded-full border border-primary-300">
