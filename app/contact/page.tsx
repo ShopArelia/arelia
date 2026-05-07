@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link";
 import MaskedIcon from "@/components/MaskedIcon";
 import { useState, type ChangeEvent } from "react";
 import { buttonClass } from "@/components/Button";
@@ -10,6 +11,8 @@ type FormState = {
     reason: string;
     message: string;
 };
+
+const EMAIL = "hello@arelia.org";
 
 export default function Page() {
     const [form, setForm] = useState<FormState>({
@@ -39,13 +42,13 @@ export default function Page() {
     };
 
     return (
-        <div className="w-full flex bg-white">
-            <div className="w-full flex flex-col px-16 py-30 gap-80 bg-primary-400">
-                <div className="max-w-2/3 flex flex-col gap-24">
+        <div className="w-full flex flex-col md:flex-row bg-white">
+            <div className="w-full flex flex-col px-16 py-30 gap-20 md:gap-80 bg-primary-400 items-center md:items-start">
+                <div className="md:max-w-2/3 flex flex-col gap-24">
                     <div className="flex flex-col gap-6">
-                        <p className='text-body-sm font-DMSans-400 text-primary-200'>GET IN TOUCH</p>
-                        <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>We'd love to <span className="font-DMSerif-Italic">hear from you</span></p>
-                        <p className='text-body font-DMSans-400 text-primary-100 text-wrap'>
+                        <p className='text-body-sm font-DMSans-400 text-primary-200 text-center md:text-left'>GET IN TOUCH</p>
+                        <p className='text-display font-DMSerif-Reg text-primary-50 leading-none text-center md:text-left'>We'd love to <span className="font-DMSerif-Italic">hear from you</span></p>
+                        <p className='text-body font-DMSans-400 text-primary-100 text-wrap text-center md:text-left'>
                             Whether you're a nonprofit looking to list your products, a buyer
                             with a question, or just someone who believes shopping can do more
                             good - we're here.
@@ -59,7 +62,7 @@ export default function Page() {
                             </div>
                             <div className="flex flex-col justify-between">
                                 <p className='text-body-sm font-DMSans-400 text-primary-200 leading-none'>EMAIL</p>
-                                <p className='text-body font-DMSans-400 text-primary-100 leading-none'>hello@arelia.org</p>
+                                <Link href={`mailto:${EMAIL}`} className='text-body font-DMSans-400 text-primary-100 leading-none'>{EMAIL}</Link>
                             </div>
                         </div>
                         <div className="flex gap-2 items-center justify-start">
