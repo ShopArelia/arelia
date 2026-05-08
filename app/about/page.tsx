@@ -58,8 +58,8 @@ export default async function Page() {
                         <p className='text-body-sm font-DMSans-400 text-primary-300'>01</p>
                         <h1 className='text-h1 font-DMSerif-Reg text-surface-400'>Radical transparency</h1>
                         <p className='text-body font-DMSans-400 text-surface-300'>
-                            Every product page links directly to the nonprofit's own store. We never hold
-                            inventory, never take a cut of the sale, and never obscure who you're buying from.
+                            Every product page links directly to the nonprofit's own store. We never
+                            hold inventory and never obscure who you're buying from.
                         </p>
                     </div>
                     <Divider />
