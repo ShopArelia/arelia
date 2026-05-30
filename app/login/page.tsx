@@ -26,7 +26,7 @@ export default function AdminLoginPage() {
             return;
         }
 
-        router.push("/admin/blogs");
+        router.push("/admin");
     };
 
     return (
