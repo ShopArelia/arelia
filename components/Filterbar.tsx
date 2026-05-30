@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useRef } from "react";
 import Button from "./Button";
 import { Cause } from "@/data/causes";
 
@@ -37,6 +37,29 @@ const SORTS: SortOption[] = [
 
 export default function Filterbar({ totalCount, countLabel, activeFilter, sortActive=true, activeSort, onSortChange, path }: FilterbarProps) {
 
+    const pillsRef = useRef<HTMLDivElement>(null);
+    const isDragging = useRef(false);
+    const startX = useRef(0);
+    const scrollLeft = useRef(0);
+
+    const onMouseDown = (e: React.MouseEvent) => {
+        isDragging.current = true;
+        startX.current = e.pageX - pillsRef.current!.offsetLeft;
+        scrollLeft.current = pillsRef.current!.scrollLeft;
+    };
+
+    const onMouseMove = (e: React.MouseEvent) => {
+        if (!isDragging.current) return;
+        e.preventDefault();
+        const x = e.pageX - pillsRef.current!.offsetLeft;
+        const walk = x - startX.current;
+        pillsRef.current!.scrollLeft = scrollLeft.current - walk;
+    };
+
+    const stopDragging = () => {
+        isDragging.current = false;
+    };
+
     const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
         if (sortActive){
             onSortChange!(e.target.value);
@@ -45,14 +68,14 @@ export default function Filterbar({ totalCount, countLabel, activeFilter, sortAc
 
     return (
         <div className="w-full flex flex-col md:flex-row px-4 md:px-16 py-3 gap-6 items-center">
-            <div className="flex w-full overflow-x-auto md:w-fit md:overflow-x-visible gap-6 py-1 items-center">
+            <div ref={pillsRef} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={stopDragging} onMouseLeave={stopDragging} className="flex w-full no-scrollbar overflow-x-auto md:w-fit gap-6 py-1 items-center">
                 {FILTERS.map((filter) => (
                     <Button key={filter.value} text={filter.label} variant={activeFilter === filter.value ? 'primary' : 'ghost'} link={`/${path}?page=1${sortActive ? "&sort="+activeSort : ""}&filter=${filter.value}`} />
                 ))}
             </div>
 
-            <div className="flex w-full items-center justify-between">
-                <p className="w-full text-body-sm text-surface-400 font-DMSans-400 text-center md:text-left">Showing {totalCount} {countLabel}</p>
+            <div className="flex shrink-0 w-full md:w-fit md:gap-6 items-center justify-between">
+                <p className="text-body-sm text-surface-400 font-DMSans-400">Showing {totalCount} {countLabel}</p>
 
                 {
                 sortActive ?
