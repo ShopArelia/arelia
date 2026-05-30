@@ -11,7 +11,7 @@ export const Cause: CauseProp[] = [
     { label: "Human Rights", value: "Human-Rights" },
     { label: "Poverty", value: "Poverty" },
     { label: "Mental Health", value: "Mental-Health" },
-    { label: "Children", value: "Children" },
+    { label: "Children & Youth", value: "Children-Youth" },
     { label: "Veterans", value: "Veterans" },
     { label: "Community", value: "Community" },
     { label: "Disaster Relief", value: "Disaster-Relief" },
