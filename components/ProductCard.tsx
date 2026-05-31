@@ -10,15 +10,15 @@ type ProductCardProps = {
 
 export default function ProductCard({product, ngoName}: ProductCardProps) {
     return(
-        <div className={`w-[200px] h-[310px] flex flex-col card bg-surface-50`}>
-            <div className="w-full h-fit">
+        <div className={`w-50 h-80 flex flex-col card bg-surface-50`}>
+            <div className="w-full h-140 relative">
                 <Image
                     src={product.image_url}
                     alt={`Image of ${product.title}`}
-                    width={200}
-                    height={200}
+                    fill={true}
+                    sizes="(min-height: 200px)"
+                    style={{objectFit:"contain"}}
                     loading="eager"
-                    unoptimized={true}
                 />
             </div>
             <div className="w-full h-full flex flex-col p-3 justify-between">

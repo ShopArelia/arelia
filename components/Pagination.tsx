@@ -43,7 +43,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
                 disabled={currentPage === totalPages}
                 className="w-[36px] h-[36px] flex items-center justify-center bg-primary-50 border border-primary-200 rounded-lg cursor-pointer"
             >
-                <MaskedIcon src="./icons/arrow-right-long.svg" size="12px" />
+                <MaskedIcon src="./icons/arrow-right-long.svg" size="16px" className="text-surface-300" />
             </button>
         </nav>
     )
