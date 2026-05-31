@@ -23,7 +23,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
                 disabled={currentPage === 1}
                 className="w-[36px] h-[36px] flex items-center justify-center bg-primary-50 border border-primary-200 rounded-lg cursor-pointer"
             >
-                <MaskedIcon src="./icons/arrow-left-long.svg" size="16px" className="text-surface-300" />
+                <MaskedIcon src="/icons/arrow-left-long.svg" size="16px" className="text-surface-300" />
             </button>
 
             <div className="flex gap-2 items-center">
@@ -43,7 +43,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
                 disabled={currentPage === totalPages}
                 className="w-[36px] h-[36px] flex items-center justify-center bg-primary-50 border border-primary-200 rounded-lg cursor-pointer"
             >
-                <MaskedIcon src="./icons/arrow-right-long.svg" size="16px" className="text-surface-300" />
+                <MaskedIcon src="/icons/arrow-right-long.svg" size="16px" className="text-surface-300" />
             </button>
         </nav>
     )
