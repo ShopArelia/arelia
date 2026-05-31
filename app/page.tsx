@@ -120,15 +120,21 @@ export default async function Page() {
         <div className='flex flex-col md:flex-row items-center gap-6'>
           <div className='flex gap-4 items-center justify-center flex-wrap'>
             {featuredNgos.map((ngo) => (
-              <div key={ngo.id} className='w-[60px] h-[60px] rounded-xl border border-surface-200 overflow-hidden'>
-                <Image key={ngo.id} src={ngo.logo_url} alt={ngo.name} width={60} height={60} />
+              <div key={ngo.id} className='w-20 h-20 flex relative rounded-full border border-surface-200 overflow-hidden'>
+              {ngo.logo_url ? (
+                  <Image src={ngo.logo_url} alt={ngo.name} fill unoptimized />
+              ) : (
+                  <div className="w-full h-full bg-primary-100 flex items-center justify-center text-primary-300 font-DMSans-500 text-h4">
+                      {ngo.name.charAt(0).toUpperCase()}
+                  </div>
+              )}
               </div>
             ))}
           </div>
           <div className='flex flex-col md:flex-row items-baseline justify-center gap-2'>
-            <p className='text-body font-DMSans-400 text-surface-300'>and 24 more verified organizations.</p>
+            <p className='text-body font-DMSans-400 text-surface-300'>and {ngoCount ? (ngoCount - showNgoCount) : "0"} more verified organizations.</p>
             <Link className='flex h-fit gap-1 items-center justify-center' href='/nonprofits'>
-              <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all {ngoCount ? (ngoCount - showNgoCount) : "nonprofits"}</p>
+              <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all {ngoCount ? ngoCount : "nonprofits"}</p>
               <Image src='./icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
             </Link>
           </div>
