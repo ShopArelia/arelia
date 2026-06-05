@@ -6,9 +6,10 @@ import type { Tables } from "@/types/supabase";
 type ProductCardProps = {
     product: Tables<'products'>;
     ngoName?: string;
+    cause?: string;
 }
 
-export default function ProductCard({product, ngoName}: ProductCardProps) {
+export default function ProductCard({product, ngoName, cause}: ProductCardProps) {
     return(
         <div className={`w-50 h-80 flex flex-col card bg-surface-50`}>
             <div className="w-full h-140 relative">
@@ -20,6 +21,9 @@ export default function ProductCard({product, ngoName}: ProductCardProps) {
                     style={{objectFit:"contain"}}
                     loading="eager"
                 />
+                <div className="absolute z-100 bottom-2 left-2 bg-primary-100 flex px-1 rounded-sm">
+                    <p className="text-meta font-DMSans-500 text-surface-300">{cause}</p>
+                </div>
             </div>
             <div className="w-full h-full flex flex-col p-3 justify-between">
                 <div className="flex flex-col gap-1">

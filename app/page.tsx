@@ -28,6 +28,7 @@ export default async function Page() {
   const {data: blogs, count: __}: BlogsType = await getBlogs({ limit: 2 });
   const { ngoCount, productCount, causeCount } = await getAllCounts();
   const ngoNameById = new Map(ngos.map((ngo) => [ngo.id, ngo.name]));
+  const ngoCauseById = new Map(ngos.map((ngo) => [ngo.id, ngo.cause]));
   const featuredNgos = ngos.slice(0, showNgoCount);
 
   return (
@@ -75,7 +76,7 @@ export default async function Page() {
 
         <div className='flex flex-col md:flex-row gap-6 items-center justify-center md:justify-between'>
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} ngoName={ngoNameById.get(product.ngo_id) ?? ''} />
+            <ProductCard key={product.id} product={product} ngoName={ngoNameById.get(product.ngo_id) ?? ''} cause={ngoCauseById.get(product.ngo_id ?? '')} />
           ))}
         </div>
       </div>

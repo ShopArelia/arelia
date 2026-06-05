@@ -12,6 +12,7 @@ import type { Tables } from "@/types/supabase";
 
 type ShopProduct = Tables<'products'> & {
     ngoName: string;
+    cause: string;
 };
 
 type ShopPageProps = {
@@ -91,7 +92,7 @@ export default function ShopPage({ products, count, currentPage, totalPages, fil
             <div className="w-full flex flex-col px-8 py-12 md:px-16 md:py-24 gap-16 items-center justify-center">
                 <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] place-items-center gap-16 ">
                     {products.map((product) => (
-                        <ProductCard key={product.id} product={product} ngoName={product.ngoName} />
+                        <ProductCard key={product.id} product={product} ngoName={product.ngoName} cause={product.cause} />
                     ))}
                 </div>
 

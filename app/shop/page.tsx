@@ -39,12 +39,14 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
     const { data: products, count }: ProductsType = await getProductsByRange({ from, to, filterVal, column, ascending, searchVal });
     const {data: ngos, count: _}: NGOsType = await getNGOs({});
     const ngoNameById = new Map(ngos.map((ngo) => [ngo.id, ngo.name]));
+    const ngoCauseById = new Map(ngos.map((ngo) => [ngo.id, ngo.cause]));
 
     const totalPages = Math.ceil((count ?? 0) / PAGE_SIZE);
 
     const shopProducts = products.map((product) => ({
         ...product,
         ngoName: ngoNameById.get(product.ngo_id) ?? "",
+        cause: ngoCauseById.get(product.ngo_id) ?? "",
     }));
 
     const { ngoCount, productCount, causeCount } = await getAllCounts();
