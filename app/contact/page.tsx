@@ -12,7 +12,7 @@ type FormState = {
     message: string;
 };
 
-const EMAIL = "hello@arelia.org";
+const EMAIL = "shoparelia@yahoo.com";
 
 export default function Page() {
     const [form, setForm] = useState<FormState>({
