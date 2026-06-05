@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DMSans400, DMSans500, DMSerifReg, DMSerifItalic } from "./fonts";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 import Navbar from "@/components/Navbar";
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-primary-50">
         <Navbar />
         {children}
+        <Analytics />
         <Footer />
       </body>
     </html>
