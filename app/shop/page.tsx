@@ -1,6 +1,7 @@
 import ShopPage from "@/components/ShopPage";
 import { getNGOs, getProductsByRange, getAllCounts } from "@/utils/supabase/database";
 import type { Tables } from "@/types/supabase";
+import { Cause } from "@/data/causes";
 
 const PAGE_SIZE = 12;
 
@@ -31,12 +32,15 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
     const sortVal = sort ?? "latest";
     const searchVal = search ?? "";
 
+    const filterCause = Object.entries(Cause).find(([key, val]) => val.value === filterVal);
+    const filterLabel = filterCause ? filterCause[1].label : 'all';
+
     const from = (pageNumber - 1) * PAGE_SIZE;
     const to = from + PAGE_SIZE - 1;
 
     const { column, ascending } = SORT_MAP[sortVal as keyof typeof SORT_MAP] ?? SORT_MAP["latest"];
 
-    const { data: products, count }: ProductsType = await getProductsByRange({ from, to, filterVal, column, ascending, searchVal });
+    const { data: products, count }: ProductsType = await getProductsByRange({ from, to, filterVal: filterLabel, column, ascending, searchVal });
     const {data: ngos, count: _}: NGOsType = await getNGOs({});
     const ngoNameById = new Map(ngos.map((ngo) => [ngo.id, ngo.name]));
     const ngoCauseById = new Map(ngos.map((ngo) => [ngo.id, ngo.cause]));
