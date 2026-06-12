@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DMSans400, DMSans500, DMSerifReg, DMSerifItalic } from "./fonts";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 import Navbar from "@/components/Navbar";
@@ -25,6 +26,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Analytics />
+        <SpeedInsights />
         <Footer />
       </body>
     </html>
