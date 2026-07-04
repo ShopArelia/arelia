@@ -10,6 +10,7 @@ type FilterbarProps = {
     activeFilter: string;
     sortActive?: boolean;
     activeSort?: string;
+    activeMerch?: string;
     onSortChange?: (value: string) => void;
     path: string;
 }
@@ -35,7 +36,7 @@ const SORTS: SortOption[] = [
     { label: "Price: high to low", value: 'price-desc' },
 ]
 
-export default function Filterbar({ totalCount, countLabel, activeFilter, sortActive=true, activeSort, onSortChange, path }: FilterbarProps) {
+export default function Filterbar({ totalCount, countLabel, activeFilter, sortActive=true, activeSort, activeMerch, onSortChange, path }: FilterbarProps) {
 
     const pillsRef = useRef<HTMLDivElement>(null);
     const isDragging = useRef(false);
@@ -70,7 +71,7 @@ export default function Filterbar({ totalCount, countLabel, activeFilter, sortAc
         <div className="w-full flex flex-col md:flex-row px-4 md:px-16 py-3 gap-6 items-center">
             <div ref={pillsRef} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={stopDragging} onMouseLeave={stopDragging} className="flex w-full no-scrollbar overflow-x-auto md:w-fit gap-6 py-1 items-center">
                 {FILTERS.map((filter) => (
-                    <Button key={filter.value} text={filter.label} variant={activeFilter === filter.value ? 'primary' : 'ghost'} link={`/${path}?page=1${sortActive ? "&sort="+activeSort : ""}&filter=${filter.value}`} />
+                    <Button key={filter.value} text={filter.label} variant={activeFilter === filter.value ? 'primary' : 'ghost'} link={`/${path}?page=1${sortActive ? "&sort="+activeSort : ""}${activeMerch ? "merch=" + activeMerch : ''}&filter=${filter.value}`} />
                 ))}
             </div>
 

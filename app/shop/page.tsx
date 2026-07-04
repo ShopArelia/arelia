@@ -1,7 +1,7 @@
 import ShopPage from "@/components/ShopPage";
 import { getNGOs, getProductsByRange, getAllCounts } from "@/utils/supabase/database";
 import type { Tables } from "@/types/supabase";
-import { Cause } from "@/data/causes";
+import { Cause, MERCHTYPE } from "@/data/causes";
 
 const PAGE_SIZE = 12;
 
@@ -26,34 +26,38 @@ export default async function Page({ searchParams }: { searchParams: Promise<Sea
         "price-desc": {column: "price", ascending: false},
     } as const;
 
-    const {page, filter, sort, search} = await searchParams;
+    const {page, filter, sort, merch, search} = await searchParams;
     const pageNumber = Number(page ?? 1);
     const filterVal = filter ?? "all";
     const sortVal = sort ?? "latest";
     const searchVal = search ?? "";
-
+    const merchVal = merch ?? 'all';
+    
     const filterCause = Object.entries(Cause).find(([key, val]) => val.value === filterVal);
     const filterLabel = filterCause ? filterCause[1].label : 'all';
-
+    
+    const merchType = Object.entries(MERCHTYPE).find(([key, val]) => val.value === merchVal);
+    const merchLabel = merchType ? merchType[1].value : 'all';
+    
     const from = (pageNumber - 1) * PAGE_SIZE;
     const to = from + PAGE_SIZE - 1;
-
+    
     const { column, ascending } = SORT_MAP[sortVal as keyof typeof SORT_MAP] ?? SORT_MAP["latest"];
 
-    const { data: products, count }: ProductsType = await getProductsByRange({ from, to, filterVal: filterLabel, column, ascending, searchVal });
+    const { data: products, count }: ProductsType = await getProductsByRange({ from, to, filterVal: filterLabel, merchVal: merchLabel, column, ascending, searchVal });
     const {data: ngos, count: _}: NGOsType = await getNGOs({});
     const ngoNameById = new Map(ngos.map((ngo) => [ngo.id, ngo.name]));
     const ngoCauseById = new Map(ngos.map((ngo) => [ngo.id, ngo.cause]));
-
+    
     const totalPages = Math.ceil((count ?? 0) / PAGE_SIZE);
-
+    
     const shopProducts = products.map((product) => ({
         ...product,
         ngoName: ngoNameById.get(product.ngo_id) ?? "",
         cause: ngoCauseById.get(product.ngo_id) ?? "",
     }));
-
+    
     const { ngoCount, productCount, causeCount } = await getAllCounts();
 
-    return <ShopPage products={shopProducts ?? []} count={count ?? 0} currentPage={pageNumber} totalPages={totalPages} filter={filterVal} sort={sortVal} ngoCount={ngoCount} productCount={productCount} />
+    return <ShopPage products={shopProducts ?? []} count={count ?? 0} currentPage={pageNumber} totalPages={totalPages} filter={filterVal} merch={merchVal} sort={sortVal} ngoCount={ngoCount} productCount={productCount} />
 }

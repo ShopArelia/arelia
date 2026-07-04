@@ -26,6 +26,7 @@ export type MerchProp = {
 export const MERCHTYPE: MerchProp[] = [
     { label: "T-Shirts", value: "T-Shirts" },
     { label: "Hoodies & Sweatshirts", value: "Hoodies-Sweatshirts" },
+    { label: "Pants & Shorts", value: "Pants-Shorts" },
     { label: "Hats & Beanies", value: "Hats-Beanies" },
     { label: "Tote Bags", value: "Tote-Bags" },
     { label: "Stickers & Decals", value: "Stickers-Decals" },

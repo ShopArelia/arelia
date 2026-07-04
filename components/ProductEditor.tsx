@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
+import { MERCHTYPE } from "@/data/causes";
 
 type NGOOption = { id: string; name: string };
 
@@ -14,6 +15,7 @@ type ProductEditorProps = {
     title: string;
     image_url: string;
     ngo_id: string;
+    merch: string;
     external_link: string;
     price: number;
   };
@@ -26,20 +28,23 @@ export default function ProductEditor({ mode, ngos, initialData }: ProductEditor
   const [title,        setTitle]        = useState(initialData?.title        ?? "");
   const [imageUrl,     setImageUrl]     = useState(initialData?.image_url    ?? "");
   const [ngoId,        setNgoId]        = useState(initialData?.ngo_id       ?? "");
+  const [merch,        setMerch]        = useState(initialData?.merch        ?? "");
   const [externalLink, setExternalLink] = useState(initialData?.external_link ?? "");
   const [price,        setPrice]        = useState<number>(initialData?.price ?? 0);
   const [status,       setStatus]       = useState<"idle" | "saving" | "success" | "error">("idle");
   const [error,        setError]        = useState("");
 
+  console.log(initialData)
+
   const handleSave = async () => {
-    if (!title || !ngoId || !externalLink || price <= 0) {
+    if (!title || !ngoId || !merch || !externalLink || price <= 0) {
       setError("Title, NGO, external link and a valid price are required.");
       return;
     }
     setError("");
     setStatus("saving");
 
-    const payload = { title, image_url: imageUrl, ngo_id: ngoId, external_link: externalLink, price };
+    const payload = { title, image_url: imageUrl, ngo_id: ngoId, merch_type: merch, external_link: externalLink, price };
 
     if (mode === "new") {
       const { error: saveError } = await supabase.from("products").insert(payload);
@@ -142,6 +147,21 @@ export default function ProductEditor({ mode, ngos, initialData }: ProductEditor
             <option value="" disabled>Select an NGO</option>
             {ngos.map((ngo) => (
               <option key={ngo.id} value={ngo.id}>{ngo.name}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Merch */}
+        <div className="flex flex-col gap-1.5">
+          <label className={labelClass}>Merch Type</label>
+          <select
+            value={merch} onChange={(e) => setMerch(e.target.value)}
+            className={inputClass + " appearance-none cursor-pointer"}
+            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23B4B2A9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 12px center" }}
+          >
+            <option value="" disabled>Select a merch type</option>
+            {MERCHTYPE.map((merchtype) => (
+              <option key={merchtype.value} value={merchtype.value}>{merchtype.label}</option>
             ))}
           </select>
         </div>

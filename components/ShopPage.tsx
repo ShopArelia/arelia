@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Divider from "@/components/Divider";
 import Filterbar from "@/components/Filterbar";
+import MerchCategory from "./MerchCategory";
 import ProductCard from "@/components/ProductCard";
 import Pagination from "./Pagination";
 import type { Tables } from "@/types/supabase";
@@ -22,11 +23,12 @@ type ShopPageProps = {
     totalPages: number;
     filter: string;
     sort: string;
+    merch: string;
     ngoCount: number | null;
     productCount: number | null;
 };
 
-export default function ShopPage({ products, count, currentPage, totalPages, filter, sort, ngoCount, productCount }: ShopPageProps) {
+export default function ShopPage({ products, count, currentPage, totalPages, filter, sort, merch, ngoCount, productCount }: ShopPageProps) {
     const searchParams = useSearchParams();
     const router = useRouter();
     
@@ -83,6 +85,13 @@ export default function ShopPage({ products, count, currentPage, totalPages, fil
                 activeFilter={filter}
                 activeSort={sort}
                 onSortChange={handleSort}
+                path="shop"
+            />
+
+            <MerchCategory
+                activeMerch={merch}
+                activeFilter={filter}
+                activeSort={sort}
                 path="shop"
             />
 
