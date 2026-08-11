@@ -67,7 +67,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                         <MaskedIcon src="/icons/arrow-right-long.svg" size="14px" className="text-primary-200 hidden md:block" />
                         <p className='text-body-sm font-DMSans-400 text-primary-200 uppercase hidden md:block'>{blog.title}</p>
                     </div>
-                    <p className='text-display font-DMSerif-Reg text-primary-50 leading-none'>{blog.title}</p>
+                    <h1 className='text-display font-DMSerif-Reg text-primary-50 leading-none'>{blog.title}</h1>
                     <p className='text-body font-DMSans-400 text-primary-100 text-wrap'>{blog.excerpt}</p>
                     <div className="flex gap-3">
                         <p className='text-body-sm font-DMSans-400 text-primary-100'>{blog.author}</p>

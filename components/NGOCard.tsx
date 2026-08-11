@@ -30,8 +30,10 @@ export default function NGOCard({ ngo }: NGOCardProps) {
                 <p className="text-body text-surface-300 font-DMSans-400 leading-none">{ngo.description}</p>
             </div>
 
+            {/* A statistic, not a section heading — the NGO name above is the
+                card's only heading. */}
             <div className="flex md:flex-col items-center gap-2 md:gap-1 md:items-end">
-                <h2 className="text-h2 text-surface-400 font-DMSerif-Reg leading-none">{ngo.products[0].count}</h2>
+                <p className="text-h2 text-surface-400 font-DMSerif-Reg leading-none">{ngo.products[0].count}</p>
                 <p className="text-body text-surface-300 font-DMSans-400 leading-none">products</p>
             </div>
         </div>

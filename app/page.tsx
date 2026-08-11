@@ -26,7 +26,7 @@ export default async function Page() {
       <div className='flex flex-col md:flex-row px-16 py-30 gap-12 items-center justify-between bg-primary-400'>
         <div className='flex flex-col gap-6 items-center md:items-start'>
           <p className='text-body-sm font-DMSans-400 text-primary-200 text-center md:text-left'>SHOP WITH PURPOSE</p>
-          <p className='text-display font-DMSerif-Reg text-primary-50 leading-none text-center md:text-left'>Products that give back to <span className='font-DMSerif-Italic'>the world</span></p>
+          <h1 className='text-display font-DMSerif-Reg text-primary-50 leading-none text-center md:text-left'>Products that give back to <span className='font-DMSerif-Italic'>the world</span></h1>
           <p className='text-body font-DMSans-400 text-primary-100 text-center md:text-left'>Every item here supports a verified nonprofit. You get something you love - they get the funding to keep going.</p>
           <div className='flex gap-3'>
             <Button text='Browse products' link='/shop' variant='danger' />
@@ -55,7 +55,7 @@ export default async function Page() {
       {/* Featured Products */}
       <div className='flex flex-col px-16 py-24 gap-16 bg-primary-50'>
         <div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
-          <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Featured products</h1>
+          <h2 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Featured products</h2>
           <Link className='flex gap-1 items-center justify-center' href='/shop'>
             <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all {productCount}</p>
             <Image src='/icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
@@ -83,22 +83,22 @@ export default async function Page() {
 
       {/* How it works */}
       <div className='flex flex-col px-16 py-24 gap-16 bg-white items-center md:items-start'>
-          <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>How it works</h1>
+          <h2 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>How it works</h2>
 
           <div className='flex gap-12 flex-col md:flex-row'>
             <div className='flex flex-col gap-3 items-center md:items-start'>
               <Image src='/icons/search.svg' alt='' width={50} height={50} unoptimized />
-              <h2 className='text-h2 font-DMSerif-Reg text-surface-400'>Browse by cause</h2>
+              <h3 className='text-h2 font-DMSerif-Reg text-surface-400'>Browse by cause</h3>
               <p className='text-body font-DMSans-400 text-surface-300 text-center md:text-left'>Filter products by the causes that matter to you - environment, education, food security, and more.</p>
             </div>
             <div className='flex flex-col gap-3 items-center md:items-start'>
               <Image src='/icons/bag.svg' alt='' width={50} height={50} unoptimized />
-              <h2 className='text-h2 font-DMSerif-Reg text-surface-400'>Buy from the nonprofit</h2>
+              <h3 className='text-h2 font-DMSerif-Reg text-surface-400'>Buy from the nonprofit</h3>
               <p className='text-body font-DMSans-400 text-surface-300 text-center md:text-left'>Click any product and you’re taken directly to the nonprofit’s store. We never handle the transaction.</p>
             </div>
             <div className='flex flex-col gap-3 items-center md:items-start'>
               <Image src='/icons/heart.svg' alt='' width={50} height={50} unoptimized />
-              <h2 className='text-h2 font-DMSerif-Reg text-surface-400'>Impact is automatic</h2>
+              <h3 className='text-h2 font-DMSerif-Reg text-surface-400'>Impact is automatic</h3>
               <p className='text-body font-DMSans-400 text-surface-300 text-center md:text-left'>Your purchase directly funds the nonprofit’s work. No middleman, no extra steps, no donation required.</p>
             </div>
           </div>
@@ -109,7 +109,7 @@ export default async function Page() {
       {/* nonprofits we support */}
       <div className='flex flex-col px-16 py-24 gap-16 bg-primary-50'>
         <div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
-          <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Nonprofits we support</h1>
+          <h2 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Nonprofits we support</h2>
           <Link className='flex gap-1 items-center justify-center' href='/nonprofits'>
             <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all {ngoCount}</p>
             <Image src='/icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
@@ -145,7 +145,7 @@ export default async function Page() {
       {/* From the blog */}
       <div className='flex flex-col px-16 py-24 gap-16 bg-white'>
         <div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
-          <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>From the blog</h1>
+          <h2 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>From the blog</h2>
           <Link className='flex gap-1 items-center justify-center' href='/blogs'>
             <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>Read all posts</p>
             <Image src='/icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
@@ -155,7 +155,7 @@ export default async function Page() {
         <div className='flex flex-col gap-6'>
           {blogs.map((blog, index) => (
             <Fragment key={blog.id}>
-              <BlogPost blog={blog} />
+              <BlogPost blog={blog} as="h3" />
               {index < blogs.length - 1 ? <Divider /> : null}
             </Fragment>
           ))}

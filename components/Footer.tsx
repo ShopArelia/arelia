@@ -58,10 +58,14 @@ export default function Footer() {
             <Divider light={false} />
 
             <div className="flex gap-6 justify-center md:justify-start">
+                {/* Not underlined: these have no destination, and the SUPPORT
+                    column above already carries the real Privacy/Terms links.
+                    Underlined text that isn't focusable reads as a broken link
+                    to both users and assistive tech. */}
                 <p className="text-caption text-surface-300 font-DMSans-400">© 2026 Arelia</p>
-                <p className="text-caption text-surface-300 font-DMSans-400 underline">Privacy</p>
-                <p className="text-caption text-surface-300 font-DMSans-400 underline">Terms</p>
-                <p className="text-caption text-surface-300 font-DMSans-400 underline">Credit</p>
+                <p className="text-caption text-surface-300 font-DMSans-400">Privacy</p>
+                <p className="text-caption text-surface-300 font-DMSans-400">Terms</p>
+                <p className="text-caption text-surface-300 font-DMSans-400">Credit</p>
             </div>
         </div>
     )

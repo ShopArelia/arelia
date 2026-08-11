@@ -2,7 +2,17 @@ import Link from "next/link";
 
 import { Tables } from "@/types/supabase";
 
-export default function BlogPost({blog}: {blog: Tables<"blogs">}) {
+type BlogPostProps = {
+    blog: Tables<"blogs">;
+    /**
+     * Depth of the surrounding section. On /blogs the page title is the h1 so
+     * post titles are h2; on the homepage they sit under the "From the blog"
+     * h2, so they drop to h3.
+     */
+    as?: "h2" | "h3";
+}
+
+export default function BlogPost({ blog, as: Heading = "h2" }: BlogPostProps) {
     const formattedUpdatedAt = blog.updated_at
         ? new Date(blog.updated_at)
         : null;
@@ -18,7 +28,7 @@ export default function BlogPost({blog}: {blog: Tables<"blogs">}) {
     return (
         <Link href={`/blogs/${blog.slug}`} className="w-full flex flex-col gap-5">
             <div className="flex flex-col gap-3">
-                <p className="text-h2 text-surface-400 font-DMSerif-Reg ">{blog.title}</p>
+                <Heading className="text-h2 text-surface-400 font-DMSerif-Reg ">{blog.title}</Heading>
                 <p className="text-label text-surface-300 font-DMSans-500 leading-none">{blog.read_time} min read</p>
             </div>
             <p className="text-body text-surface-300 font-DMSans-400 leading-none">{blog.excerpt}</p>

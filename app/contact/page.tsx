@@ -47,7 +47,7 @@ export default function Page() {
                 <div className="md:max-w-2/3 flex flex-col gap-24">
                     <div className="flex flex-col gap-6">
                         <p className='text-body-sm font-DMSans-400 text-primary-200 text-center md:text-left'>GET IN TOUCH</p>
-                        <p className='text-display font-DMSerif-Reg text-primary-50 leading-none text-center md:text-left'>We&apos;d love to <span className="font-DMSerif-Italic">hear from you</span></p>
+                        <h1 className='text-display font-DMSerif-Reg text-primary-50 leading-none text-center md:text-left'>We&apos;d love to <span className="font-DMSerif-Italic">hear from you</span></h1>
                         <p className='text-body font-DMSans-400 text-primary-100 text-wrap text-center md:text-left'>
                             Whether you&apos;re a nonprofit looking to list your products, a buyer
                             with a question, or just someone who believes shopping can do more
@@ -84,7 +84,7 @@ export default function Page() {
 
             <div className="w-full flex flex-col px-16 py-24 gap-12 justify-center">
                 <div className="flex flex-col gap-6">
-                    <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Send us a message</h1>
+                    <h2 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Send us a message</h2>
                     <p className='text-body font-DMSans-400 text-surface-300 leading-none'>Fill in the form and we&apos;ll get back to you as soon as we can.</p>
                 </div>
 
