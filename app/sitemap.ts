@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { getBlogs, getNGOs } from "@/utils/supabase/database";
-import { SITE_URL } from "@/data/site";
+import { SITE_URL, NGO_PAGE_SIZE } from "@/data/site";
 
 /**
  * Replaces a hand-written sitemap that listed ~180 faceted /shop?filter=…&merch=…
@@ -31,8 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // The directory paginates rather than giving each NGO its own route, so link
     // the pages that actually exist.
-    const perPage = 10;
-    const ngoPages = Math.ceil((ngos?.length ?? 0) / perPage);
+    const ngoPages = Math.ceil((ngos?.length ?? 0) / NGO_PAGE_SIZE);
     const ngoRoutes: MetadataRoute.Sitemap = Array.from({ length: Math.max(0, ngoPages - 1) }, (_, i) => ({
         url: `${SITE_URL}/nonprofits?page=${i + 2}`,
         changeFrequency: "weekly",

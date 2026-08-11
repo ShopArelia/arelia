@@ -6,8 +6,8 @@ import ListingSkeleton from "@/components/ListingSkeleton";
 import { getNGOs, getAllCounts } from "@/utils/supabase/database";
 import type { Tables } from "@/types/supabase";
 import { Cause } from "@/data/causes";
+import { NGO_PAGE_SIZE } from "@/data/site";
 
-const PAGE_SIZE = 10;
 
 export type NGOsType = {
     data: Array<Tables<'ngos'> & {
@@ -45,8 +45,8 @@ async function NGOListing({ searchParams }: { searchParams: Promise<SearchParams
 
     const filterLabel = Cause.find((c) => c.value === filterVal)?.label ?? "all";
 
-    const from = (pageNumber - 1) * PAGE_SIZE;
-    const to = from + PAGE_SIZE - 1;
+    const from = (pageNumber - 1) * NGO_PAGE_SIZE;
+    const to = from + NGO_PAGE_SIZE - 1;
 
     const [{ data: ngos, count }, { ngoCount, causeCount }] = await Promise.all([
         getNGOs({
@@ -58,7 +58,7 @@ async function NGOListing({ searchParams }: { searchParams: Promise<SearchParams
         getAllCounts(),
     ]);
 
-    const totalPages = Math.ceil((count ?? 0) / PAGE_SIZE);
+    const totalPages = Math.ceil((count ?? 0) / NGO_PAGE_SIZE);
 
     return (
         <NGOPage
