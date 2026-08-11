@@ -1,4 +1,8 @@
+import type { Metadata } from "next";
+import { Suspense } from "react";
+
 import NGOPage from "@/components/NGOPage";
+import ListingSkeleton from "@/components/ListingSkeleton";
 import { getNGOs, getAllCounts } from "@/utils/supabase/database";
 import type { Tables } from "@/types/supabase";
 import { Cause } from "@/data/causes";
@@ -16,27 +20,55 @@ type SearchParamsType = {
     [key: string]: string | undefined;
 }
 
-export default async function Page({ searchParams }: { searchParams: Promise<SearchParamsType> }) {
-    const {page, filter, search} = await searchParams;
-    const pageNumber = Number(page ?? 1);
+export const metadata: Metadata = {
+    title: "Nonprofit directory",
+    description: "Every nonprofit on Arelia, verified and organized by cause.",
+    alternates: { canonical: "/nonprofits" },
+};
+
+export default function Page({ searchParams }: { searchParams: Promise<SearchParamsType> }) {
+    // The listing depends on searchParams (request-time), so it streams in while
+    // the shell prerenders.
+    return (
+        <Suspense fallback={<ListingSkeleton title="Nonprofit directory" description="Verified nonprofits, organized by cause" layout="rows" />}>
+            <NGOListing searchParams={searchParams} />
+        </Suspense>
+    );
+}
+
+async function NGOListing({ searchParams }: { searchParams: Promise<SearchParamsType> }) {
+    const { page, filter, search } = await searchParams;
+
+    const pageNumber = Math.max(1, Number(page ?? 1) || 1);
     const filterVal = filter ?? "all";
     const searchVal = search ?? "";
 
-    const filterCause = Object.entries(Cause).find(([key, val]) => val.value === filterVal);
-    const filterLabel = filterCause ? filterCause[1].label : 'all';
+    const filterLabel = Cause.find((c) => c.value === filterVal)?.label ?? "all";
 
     const from = (pageNumber - 1) * PAGE_SIZE;
     const to = from + PAGE_SIZE - 1;
 
-    if(filterLabel == "all"){
-        var { data: ngos, count }: NGOsType = await getNGOs({from, to, name: searchVal });
-    } else {
-        var { data: ngos, count }: NGOsType = await getNGOs({from, to, cause: filterLabel, name: searchVal });
-    }
+    const [{ data: ngos, count }, { ngoCount, causeCount }] = await Promise.all([
+        getNGOs({
+            from,
+            to,
+            name: searchVal,
+            cause: filterLabel === "all" ? undefined : filterLabel,
+        }) as Promise<NGOsType>,
+        getAllCounts(),
+    ]);
 
     const totalPages = Math.ceil((count ?? 0) / PAGE_SIZE);
-    
-    const { ngoCount, productCount, causeCount } = await getAllCounts();
-    
-    return <NGOPage ngos={ngos ?? []} count={count ?? 0} currentPage={pageNumber} totalPages={totalPages} filter={filterVal} ngoCount={ngoCount} causeCount={causeCount} />
+
+    return (
+        <NGOPage
+            ngos={ngos ?? []}
+            count={count ?? 0}
+            currentPage={pageNumber}
+            totalPages={totalPages}
+            filter={filterVal}
+            ngoCount={ngoCount}
+            causeCount={causeCount}
+        />
+    );
 }

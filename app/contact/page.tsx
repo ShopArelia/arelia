@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import MaskedIcon from "@/components/MaskedIcon";
-import { useState, type ChangeEvent } from "react";
+import { useState } from "react";
 import { buttonClass } from "@/components/Button";
 
 type FormState = {
@@ -28,7 +28,7 @@ export default function Page() {
         e.preventDefault();
         setStatus("loading");
         try {
-            const res = await fetch("api/contact", {
+            const res = await fetch("/api/contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form),
@@ -47,26 +47,28 @@ export default function Page() {
                 <div className="md:max-w-2/3 flex flex-col gap-24">
                     <div className="flex flex-col gap-6">
                         <p className='text-body-sm font-DMSans-400 text-primary-200 text-center md:text-left'>GET IN TOUCH</p>
-                        <p className='text-display font-DMSerif-Reg text-primary-50 leading-none text-center md:text-left'>We'd love to <span className="font-DMSerif-Italic">hear from you</span></p>
+                        <p className='text-display font-DMSerif-Reg text-primary-50 leading-none text-center md:text-left'>We&apos;d love to <span className="font-DMSerif-Italic">hear from you</span></p>
                         <p className='text-body font-DMSans-400 text-primary-100 text-wrap text-center md:text-left'>
-                            Whether you're a nonprofit looking to list your products, a buyer
+                            Whether you&apos;re a nonprofit looking to list your products, a buyer
                             with a question, or just someone who believes shopping can do more
-                            good - we're here.
+                            good - we&apos;re here.
                         </p>
                     </div>
 
                     <div className="flex flex-col gap-6">
                         <div className="flex gap-2 items-center justify-start">
-                            <div className="w-[36px] h-[36px] flex items-center justify-center border-2 rounded-md border-primary-300 cursor-pointer" onClick={() => navigator.clipboard.writeText(window.location.href)}>
+                            <button type="button" aria-label="Copy email address"
+                                className="w-[36px] h-[36px] flex items-center justify-center border-2 rounded-md border-primary-300 cursor-pointer"
+                                onClick={() => navigator.clipboard.writeText(EMAIL)}>
                                 <MaskedIcon src="/icons/envelope-regular-full.svg" size="24px" className="text-primary-200" />
-                            </div>
+                            </button>
                             <div className="flex flex-col justify-between">
                                 <p className='text-body-sm font-DMSans-400 text-primary-200 leading-none'>EMAIL</p>
                                 <Link href={`mailto:${EMAIL}`} className='text-body font-DMSans-400 text-primary-100 leading-none'>{EMAIL}</Link>
                             </div>
                         </div>
                         <div className="flex gap-2 items-center justify-start">
-                            <div className="w-[36px] h-[36px] flex items-center justify-center border-2 rounded-md border-primary-300 cursor-pointer" onClick={() => navigator.clipboard.writeText(window.location.href)}>
+                            <div className="w-[36px] h-[36px] flex items-center justify-center border-2 rounded-md border-primary-300">
                                 <MaskedIcon src="/icons/clock-regular-full.svg" size="24px" className="text-primary-200" />
                             </div>
                             <div className="flex flex-col justify-between">
@@ -77,13 +79,13 @@ export default function Page() {
                     </div>
                 </div>
 
-                <p className='text-body font-DMSerif-Italic text-primary-200'>"Every purchase has a story worth telling."</p>
+                <p className='text-body font-DMSerif-Italic text-primary-200'>&quot;Every purchase has a story worth telling.&quot;</p>
             </div>
 
             <div className="w-full flex flex-col px-16 py-24 gap-12 justify-center">
                 <div className="flex flex-col gap-6">
                     <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Send us a message</h1>
-                    <p className='text-body font-DMSans-400 text-surface-300 leading-none'>Fill in the form and we'll get back to you as soon as we can.</p>
+                    <p className='text-body font-DMSans-400 text-surface-300 leading-none'>Fill in the form and we&apos;ll get back to you as soon as we can.</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -116,7 +118,7 @@ export default function Page() {
 
                     {/* Reason */}
                     <div className="flex flex-col gap-3">
-                        <label htmlFor="reason" className='text-body font-DMSans-400 text-surface-300 leading-none'>What's this about?</label>
+                        <label htmlFor="reason" className='text-body font-DMSans-400 text-surface-300 leading-none'>What&apos;s this about?</label>
                         <select id="reason" name="reason" value={form.reason}
                             onChange={handleChange} required
                             className="p-3 text-body font-DMSans-400 text-surface-400
@@ -129,7 +131,7 @@ export default function Page() {
                             }}
                         >
                             <option value="" disabled>Select a reason</option>
-                            <option value="nonprofit">I'm a nonprofit looking to partner</option>
+                            <option value="nonprofit">I&apos;m a nonprofit looking to partner</option>
                             <option value="product">Question about a product</option>
                             <option value="press">Press or media inquiry</option>
                             <option value="other">Something else</option>
@@ -159,7 +161,7 @@ export default function Page() {
                     {/* Success */}
                     {status === "success" && (
                         <p className='text-body font-DMSans-400 text-primary-300 leading-none'>
-                            Message sent! We'll be in touch within 48 hours.
+                            Message sent! We&apos;ll be in touch within 48 hours.
                         </p>
                     )}
 

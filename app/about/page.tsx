@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Divider from "@/components/Divider"
 import { getAllCounts } from "@/utils/supabase/database";
+
+export const metadata: Metadata = {
+    title: "About",
+    description: "Why Arelia exists, how we vet nonprofits, and where your money actually goes.",
+    alternates: { canonical: "/about" },
+};
 
 export default async function Page() {
     const counts = await getAllCounts();
@@ -16,11 +23,11 @@ export default async function Page() {
 
             {/* The Problem We're Solving */}
             <div className="flex flex-col px-8 py-12 md:px-16 md:py-24 gap-12 items-center justify-center">
-                <p className='text-body-sm font-DMSans-400 text-primary-300'>THE PROBLEM WE'RE SOLVING</p>
+                <p className='text-body-sm font-DMSans-400 text-primary-300'>THE PROBLEM WE&apos;RE SOLVING</p>
                 <h1 className='text-h1 font-DMSerif-Reg text-surface-400 text-center leading-none'>Nonprofits do extraordinary work.<br />Most people never <span className='font-DMSerif-Italic text-primary-300'>feel</span> it.</h1>
                 <p className='md:max-w-1/3 text-body font-DMSans-400 text-surface-300 text-center leading-none'>
                     Donating to a cause is a moment. A transaction. You click a button,
-                    money moves, and that's usually where the relationship ends. There's
+                    money moves, and that&apos;s usually where the relationship ends. There&apos;s
                     no physical reminder of what you did, no ongoing connection to the work,
                     and no reason to come back.
                     <br />
@@ -41,14 +48,14 @@ export default async function Page() {
             <div className="flex flex-col md:flex-row px-8 py-12 md:px-16 md:py-24 gap-12 items-start bg-white">
                 <div className="w-full flex flex-col gap-12">
                     <p className='text-body-sm font-DMSans-400 text-primary-300'>WHAT WE BELIEVE</p>
-                    <h1 className='text-h1 font-DMSerif-Reg text-surface-400'>Purpose and quality<br />aren't <span className='font-DMSerif-Italic'>opposites.</span></h1>
+                    <h1 className='text-h1 font-DMSerif-Reg text-surface-400'>Purpose and quality<br />aren&apos;t <span className='font-DMSerif-Italic'>opposites.</span></h1>
                     <p className='text-body font-DMSans-400 text-surface-300'>
-                        The best case for buying from a nonprofit isn't guilt - it's that the product
-                        is worth it. We only list items that stand on their own. If it wouldn't make a
-                        good gift, if you wouldn't keep it, if the quality doesn't hold up: it doesn't make the cut.
+                        The best case for buying from a nonprofit isn&apos;t guilt - it&apos;s that the product
+                        is worth it. We only list items that stand on their own. If it wouldn&apos;t make a
+                        good gift, if you wouldn&apos;t keep it, if the quality doesn&apos;t hold up: it doesn&apos;t make the cut.
                         <br />
                         <br />
-                        We're not a charity shop. We're a marketplace that happens to direct every cent
+                        We&apos;re not a charity shop. We&apos;re a marketplace that happens to direct every cent
                         back to organizations doing work that matters.
                     </p>
                 </div>
@@ -58,8 +65,8 @@ export default async function Page() {
                         <p className='text-body-sm font-DMSans-400 text-primary-300'>01</p>
                         <h1 className='text-h1 font-DMSerif-Reg text-surface-400'>Radical transparency</h1>
                         <p className='text-body font-DMSans-400 text-surface-300'>
-                            Every product page links directly to the nonprofit's own store. We never
-                            hold inventory and never obscure who you're buying from.
+                            Every product page links directly to the nonprofit&apos;s own store. We never
+                            hold inventory and never obscure who you&apos;re buying from.
                         </p>
                     </div>
                     <Divider />
@@ -67,8 +74,8 @@ export default async function Page() {
                         <p className='text-body-sm font-DMSans-400 text-primary-300'>02</p>
                         <h1 className='text-h1 font-DMSerif-Reg text-surface-400'>Quality over quantity</h1>
                         <p className='text-body font-DMSans-400 text-surface-300'>
-                            We manually review every product before it's listed. That means a smaller catalog
-                            - and a better one. You won't find filler here.
+                            We manually review every product before it&apos;s listed. That means a smaller catalog
+                            - and a better one. You won&apos;t find filler here.
                         </p>
                     </div>
                     <Divider />
@@ -76,7 +83,7 @@ export default async function Page() {
                         <p className='text-body-sm font-DMSans-400 text-primary-300'>03</p>
                         <h1 className='text-h1 font-DMSerif-Reg text-surface-400'>Causes, not just charities</h1>
                         <p className='text-body font-DMSans-400 text-surface-300'>
-                            We organize by what you care about, not by who's asking. Environment, education,
+                            We organize by what you care about, not by who&apos;s asking. Environment, education,
                             food - your values lead, and the right organizations follow.
                         </p>
                     </div>
@@ -135,7 +142,7 @@ export default async function Page() {
                         <h1 className='text-h1 font-DMSerif-Reg text-primary-200 leading-none'>03</h1>
                         <h1 className='text-h1 font-DMSerif-Reg text-surface-400'>They receive, directly</h1>
                         <p className='text-body font-DMSans-400 text-surface-300'>
-                            Clicking a product takes you straight to the nonprofit's own store. The purchase,
+                            Clicking a product takes you straight to the nonprofit&apos;s own store. The purchase,
                             the payment, and the relationship are entirely between you and them. No middleman.
                         </p>
                     </div>

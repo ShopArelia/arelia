@@ -1,10 +1,13 @@
+import { connection } from "next/server";
 import { getBlogBySlug } from "@/utils/supabase/database";
 import { notFound } from "next/navigation";
 import BlogEditor from "@/components/BlogEditor";
  
-type Props = { params: { slug: string } };
- 
 export default async function EditBlogPage({ params }: { params: Promise<{ slug: string }> }) {
+  // Admin routes are never prerendered — `params` is request-time data and
+  // this subtree is auth-gated.
+  await connection();
+
   const { slug } = await params;
   const blog = await getBlogBySlug(slug)
  

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Divider from "@/components/Divider";
 import CopyButton from "@/components/CopyButton";
@@ -6,12 +7,42 @@ import ReadingProgress from "@/components/ReadingProgress";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { notFound } from "next/navigation";
-import { getBlogBySlug } from "@/utils/supabase/database";
+import { getBlogBySlug, getBlogs } from "@/utils/supabase/database";
 import type { Tables } from "@/types/supabase";
+
+/** Prerender every post at build time; new ones are picked up on revalidation. */
+export async function generateStaticParams() {
+    const { data: blogs } = await getBlogs();
+    return (blogs ?? []).map((blog) => ({ slug: blog.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const { slug } = await params;
+    const blog = await getBlogBySlug(slug);
+
+    if (!blog) return { title: "Post not found" };
+
+    return {
+        title: blog.title,
+        description: blog.excerpt,
+        alternates: { canonical: `/blogs/${blog.slug}` },
+        openGraph: {
+            type: "article",
+            title: blog.title,
+            description: blog.excerpt,
+            url: `/blogs/${blog.slug}`,
+            publishedTime: blog.created_at,
+            modifiedTime: blog.updated_at,
+            authors: blog.author ? [blog.author] : undefined,
+        },
+    };
+}
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const blog: Tables<"blogs"> = await getBlogBySlug(slug);
+    const blog: Tables<"blogs"> | null = await getBlogBySlug(slug);
+
+    if (!blog) notFound();
 
     const formattedUpdatedAt = blog.updated_at
         ? new Date(blog.updated_at)
@@ -24,8 +55,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             year: "numeric"
         }).format(formattedUpdatedAt)
         : blog.updated_at;
-
-    if (!blog) notFound();
 
     return (
         <div className="flex flex-col">

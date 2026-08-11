@@ -1,10 +1,13 @@
+import { connection } from "next/server";
 import { getSupabase } from "@/utils/supabase/database";
 import { notFound } from "next/navigation";
 import NGOEditor from "@/components/NGOEditor";
 
-type EditNGOProps = { params: { id: string } };
- 
 export default async function EditNGOPage({ params }: { params: Promise<{ id: string }> }) {
+  // Admin routes are never prerendered — `params` is request-time data and
+  // this subtree is auth-gated.
+  await connection();
+
   const { id } = await params;
   const supabase = await getSupabase();
   const { data: ngo } = await supabase.from("ngos").select("*").eq("id", id).single();

@@ -1,7 +1,4 @@
-'use client'
-
-import { useState, useEffect, Fragment } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { Fragment } from "react";
 
 import Header from "./Header";
 import Divider from "./Divider";
@@ -16,63 +13,35 @@ type BlogPageProps = {
     totalPages: number;
 }
 
-export default function BlogPage({ blogs, count, currentPage, totalPages }: BlogPageProps) {
-    const searchParams = useSearchParams();
-    const router = useRouter();
-
-    const [text, setText] = useState<string>(searchParams.get("search") ?? "");
-
-    useEffect(() => {
-        setText(searchParams.get("search") ?? "");
-    }, [searchParams]);
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            const params = new URLSearchParams(searchParams.toString());
-            if (text) {
-                params.set("search", text);
-            } else {
-                params.delete("search");
-            }
-            params.set("page", "1");
-            router.push(`/blogs?${params.toString()}`);
-        }, 400);
-
-        return () => clearTimeout(timeout);
-    }, [text]);
-
-    const changePage = (page: number) => {
-        if (page < 1 || page > totalPages) return;
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("page", String(page));
-        router.push(`/blogs?${params.toString()}`);
-    }
-
+export default function BlogPage({ blogs, currentPage, totalPages }: BlogPageProps) {
     return (
         <div className="flex flex-col items-center bg-white">
             <Header
                 title="Blog"
                 description="Stories, people, and the causes behind the products"
                 inputPlaceholder="Search blogs..."
-                text={text}
-                onChange={setText}
+                path="/blogs"
             />
 
             <Divider />
 
             {/* Blogs */}
             <div className="w-full flex flex-col px-8 py-12 md:px-16 md:py-24 gap-16 items-center justify-center">
-                <div className="w-full flex flex-col gap-6 item-center justify-center">
-                    {blogs.map((blog, index) => (
-                        <Fragment key={blog.id}>
-                            <BlogPost blog={blog} />
-                            {index < blogs.length - 1 ? <Divider /> : null}
-                        </Fragment>
-                    ))}
-                </div>
+                {blogs.length === 0 ? (
+                    <p className="text-body text-surface-300 font-DMSans-400 py-12">No posts found.</p>
+                ) : (
+                    <div className="w-full flex flex-col gap-6 item-center justify-center">
+                        {blogs.map((blog, index) => (
+                            <Fragment key={blog.id}>
+                                <BlogPost blog={blog} />
+                                {index < blogs.length - 1 ? <Divider /> : null}
+                            </Fragment>
+                        ))}
+                    </div>
+                )}
 
                 {totalPages > 1 && (
-                    <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={changePage} />
+                    <Pagination currentPage={currentPage} totalPages={totalPages} path="/blogs" />
                 )}
             </div>
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/utils/supabase/client";
+import { saveProduct, deleteProduct } from "@/app/admin/actions";
 import { MERCHTYPE } from "@/data/causes";
 
 type NGOOption = { id: string; name: string };
@@ -23,7 +23,6 @@ type ProductEditorProps = {
 
 export default function ProductEditor({ mode, ngos, initialData }: ProductEditorProps) {
   const router = useRouter();
-  const supabase = createClient();
 
   const [title,        setTitle]        = useState(initialData?.title        ?? "");
   const [imageUrl,     setImageUrl]     = useState(initialData?.image_url    ?? "");
@@ -33,8 +32,6 @@ export default function ProductEditor({ mode, ngos, initialData }: ProductEditor
   const [price,        setPrice]        = useState<number>(initialData?.price ?? 0);
   const [status,       setStatus]       = useState<"idle" | "saving" | "success" | "error">("idle");
   const [error,        setError]        = useState("");
-
-  console.log(initialData)
 
   const handleSave = async () => {
     if (!title || !ngoId || !merch || !externalLink || price <= 0) {
@@ -46,14 +43,8 @@ export default function ProductEditor({ mode, ngos, initialData }: ProductEditor
 
     const payload = { title, image_url: imageUrl, ngo_id: ngoId, merch_type: merch, external_link: externalLink, price };
 
-    if (mode === "new") {
-      const { error: saveError } = await supabase.from("products").insert(payload);
-      if (saveError) { setError(saveError.message); setStatus("error"); return; }
-    } else {
-      const { error: saveError } = await supabase
-        .from("products").update(payload).eq("id", initialData!.id);
-      if (saveError) { setError(saveError.message); setStatus("error"); return; }
-    }
+    const result = await saveProduct(payload, mode === "edit" ? initialData!.id : undefined);
+    if (!result.ok) { setError(result.error); setStatus("error"); return; }
 
     setStatus("success");
     setTimeout(() => router.push("/admin/products"), 1000);
@@ -61,7 +52,10 @@ export default function ProductEditor({ mode, ngos, initialData }: ProductEditor
 
   const handleDelete = async () => {
     if (!confirm("Delete this product permanently?")) return;
-    await supabase.from("products").delete().eq("id", initialData!.id);
+
+    const result = await deleteProduct(initialData!.id);
+    if (!result.ok) { setError(result.error); setStatus("error"); return; }
+
     router.push("/admin/products");
   };
 
@@ -119,7 +113,7 @@ export default function ProductEditor({ mode, ngos, initialData }: ProductEditor
             {mode === "new" ? "New product" : "Edit product"}
           </h1>
           <p className="text-[13px] text-surface-300">
-            Products link directly to the nonprofit's own store.
+            Products link directly to the nonprofit&apos;s own store.
           </p>
         </div>
 
@@ -186,7 +180,7 @@ export default function ProductEditor({ mode, ngos, initialData }: ProductEditor
           <input type="url" value={externalLink} onChange={(e) => setExternalLink(e.target.value)}
             placeholder="https://nonprofit-store.com/product" className={inputClass} />
           <p className="text-[11px] text-surface-200">
-            The buyer will be taken directly to this URL when they click "Buy now".
+            The buyer will be taken directly to this URL when they click &quot;Buy now&quot;.
           </p>
         </div>
 
@@ -196,6 +190,10 @@ export default function ProductEditor({ mode, ngos, initialData }: ProductEditor
           <input type="url" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)}
             placeholder="https://..." className={inputClass} />
           {imageUrl && (
+            // Deliberately a raw <img>: this previews a URL the admin just
+            // pasted, whose host is by definition not yet in remotePatterns,
+            // so next/image would reject it.
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={imageUrl} alt="Preview"
               className="mt-2 w-full max-h-[240px] object-cover rounded-md border border-surface-100"

@@ -7,29 +7,17 @@ import ProductCard from '@/components/ProductCard';
 import Divider from '@/components/Divider';
 
 import { getProducts, getNGOs, getBlogs, getAllCounts } from '@/utils/supabase/database';
-import type { Tables } from '@/types/supabase';
 import BlogPost from '@/components/BlogPost';
-
-type NGOsType = {
-    data: Array<Tables<'ngos'>>;
-    count: number | null;
-}
-
-type BlogsType = {
-    data: Array<Tables<'blogs'>>;
-    count: number | null;
-}
 
 const showNgoCount = 6;
 
 export default async function Page() {
-  const products: Array<Tables<'products'>> = await getProducts({ limit: 7 });
-  const {data: ngos, count: _}: NGOsType = await getNGOs({});
-  const {data: blogs, count: __}: BlogsType = await getBlogs({ limit: 2 });
-  const { ngoCount, productCount, causeCount } = await getAllCounts();
-  const ngoNameById = new Map(ngos.map((ngo) => [ngo.id, ngo.name]));
-  const ngoCauseById = new Map(ngos.map((ngo) => [ngo.id, ngo.cause]));
-  const featuredNgos = ngos.slice(0, showNgoCount);
+  const [products, { data: featuredNgos }, { data: blogs }, { ngoCount, productCount, causeCount }] = await Promise.all([
+    getProducts({ limit: 7 }),
+    getNGOs({ limit: showNgoCount }),
+    getBlogs({ limit: 2 }),
+    getAllCounts(),
+  ]);
 
   return (
     <div className='w-full'>
@@ -70,14 +58,24 @@ export default async function Page() {
           <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Featured products</h1>
           <Link className='flex gap-1 items-center justify-center' href='/shop'>
             <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all {productCount}</p>
-            <Image src='./icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
+            <Image src='/icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
           </Link>
         </div>
 
         <div className='flex flex-col md:flex-row gap-6 items-center justify-center md:justify-between'>
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} ngoName={ngoNameById.get(product.ngo_id) ?? ''} cause={ngoCauseById.get(product.ngo_id ?? '')} />
-          ))}
+          {/* No preload: this section sits well below the fold, so the hero is
+              the LCP element and preloading here would compete with it. */}
+          {products.map((product) => {
+            const ngo = (product as typeof product & { ngo: { name: string; cause: string } | null }).ngo;
+            return (
+              <ProductCard
+                key={product.id}
+                product={product}
+                ngoName={ngo?.name ?? ''}
+                cause={ngo?.cause ?? ''}
+              />
+            );
+          })}
         </div>
       </div>
 
@@ -89,17 +87,17 @@ export default async function Page() {
 
           <div className='flex gap-12 flex-col md:flex-row'>
             <div className='flex flex-col gap-3 items-center md:items-start'>
-              <Image src='./icons/search.svg' alt='' width={50} height={50} unoptimized />
+              <Image src='/icons/search.svg' alt='' width={50} height={50} unoptimized />
               <h2 className='text-h2 font-DMSerif-Reg text-surface-400'>Browse by cause</h2>
               <p className='text-body font-DMSans-400 text-surface-300 text-center md:text-left'>Filter products by the causes that matter to you - environment, education, food security, and more.</p>
             </div>
             <div className='flex flex-col gap-3 items-center md:items-start'>
-              <Image src='./icons/bag.svg' alt='' width={50} height={50} unoptimized />
+              <Image src='/icons/bag.svg' alt='' width={50} height={50} unoptimized />
               <h2 className='text-h2 font-DMSerif-Reg text-surface-400'>Buy from the nonprofit</h2>
               <p className='text-body font-DMSans-400 text-surface-300 text-center md:text-left'>Click any product and you’re taken directly to the nonprofit’s store. We never handle the transaction.</p>
             </div>
             <div className='flex flex-col gap-3 items-center md:items-start'>
-              <Image src='./icons/heart.svg' alt='' width={50} height={50} unoptimized />
+              <Image src='/icons/heart.svg' alt='' width={50} height={50} unoptimized />
               <h2 className='text-h2 font-DMSerif-Reg text-surface-400'>Impact is automatic</h2>
               <p className='text-body font-DMSans-400 text-surface-300 text-center md:text-left'>Your purchase directly funds the nonprofit’s work. No middleman, no extra steps, no donation required.</p>
             </div>
@@ -114,7 +112,7 @@ export default async function Page() {
           <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>Nonprofits we support</h1>
           <Link className='flex gap-1 items-center justify-center' href='/nonprofits'>
             <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all {ngoCount}</p>
-            <Image src='./icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
+            <Image src='/icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
           </Link>
         </div>
 
@@ -123,7 +121,7 @@ export default async function Page() {
             {featuredNgos.map((ngo) => (
               <div key={ngo.id} className='w-20 h-20 flex relative rounded-full border border-surface-200 overflow-hidden'>
               {ngo.logo_url ? (
-                  <Image src={ngo.logo_url} alt={ngo.name} fill unoptimized />
+                  <Image src={ngo.logo_url} alt={ngo.name} fill sizes="80px" style={{ objectFit: 'cover' }} />
               ) : (
                   <div className="w-full h-full bg-primary-100 flex items-center justify-center text-primary-300 font-DMSans-500 text-h4">
                       {ngo.name.charAt(0).toUpperCase()}
@@ -136,7 +134,7 @@ export default async function Page() {
             <p className='text-body font-DMSans-400 text-surface-300'>and {ngoCount ? (ngoCount - showNgoCount) : "0"} more verified organizations.</p>
             <Link className='flex h-fit gap-1 items-center justify-center' href='/nonprofits'>
               <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>See all {ngoCount ? ngoCount : "nonprofits"}</p>
-              <Image src='./icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
+              <Image src='/icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
             </Link>
           </div>
         </div>
@@ -148,9 +146,9 @@ export default async function Page() {
       <div className='flex flex-col px-16 py-24 gap-16 bg-white'>
         <div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
           <h1 className='text-h1 font-DMSerif-Reg text-surface-400 leading-none'>From the blog</h1>
-          <Link className='flex gap-1 items-center justify-center' href='/blog'>
+          <Link className='flex gap-1 items-center justify-center' href='/blogs'>
             <p className='text-meta font-DMSans-500 text-primary-300 leading-none'>Read all posts</p>
-            <Image src='./icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
+            <Image src='/icons/arrow-right-long.svg' alt='' width={10} height={10} unoptimized />
           </Link>
         </div>
         

@@ -6,7 +6,7 @@ function formatDate(d: string) {
 }
 
 export default async function AdminBlogsPage() {
-  const { data: blogs, count} = await getBlogs();
+  const { data: blogs } = await getBlogs();
 
   return (
     <div className="min-h-screen bg-surface-50">

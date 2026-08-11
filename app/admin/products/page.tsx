@@ -49,7 +49,7 @@ export default async function AdminProductsPage() {
                   {p.title}
                 </h2>
                 <p className="text-[12px] text-surface-200 mt-0.5">
-                  {(p.ngos as any)?.name ?? "—"}
+                  {(p.ngos as { name: string } | null)?.name ?? "—"}
                 </p>
               </div>
               <div className="shrink-0 flex items-center gap-4">

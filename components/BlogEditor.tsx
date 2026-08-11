@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/utils/supabase/client";
+import { saveBlog, deleteBlog } from "@/app/admin/actions";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -25,7 +25,6 @@ function slugify(str: string) {
 
 export default function BlogEditor({ mode, initialData }: BlogEditorProps) {
   const router = useRouter();
-  const supabase = createClient();
 
   const [title,    setTitle]    = useState(initialData?.title    ?? "");
   const [slug,     setSlug]     = useState(initialData?.slug     ?? "");
@@ -63,14 +62,8 @@ export default function BlogEditor({ mode, initialData }: BlogEditorProps) {
       updated_at: new Date().toISOString(),
     };
 
-    if (mode === "new") {
-      const { error: saveError } = await supabase.from("blogs").insert(payload);
-      if (saveError) { setError(saveError.message); setStatus("error"); return; }
-    } else {
-      const { error: saveError } = await supabase
-        .from("blogs").update(payload).eq("id", initialData!.id);
-      if (saveError) { setError(saveError.message); setStatus("error"); return; }
-    }
+    const result = await saveBlog(payload, mode === "edit" ? initialData!.id : undefined);
+    if (!result.ok) { setError(result.error); setStatus("error"); return; }
 
     setStatus("success");
     setTimeout(() => router.push("/admin/blogs"), 1000);
@@ -78,7 +71,10 @@ export default function BlogEditor({ mode, initialData }: BlogEditorProps) {
 
   const handleDelete = async () => {
     if (!confirm("Delete this post permanently?")) return;
-    await supabase.from("blogs").delete().eq("id", initialData!.id);
+
+    const result = await deleteBlog(initialData!.id);
+    if (!result.ok) { setError(result.error); setStatus("error"); return; }
+
     router.push("/admin/blogs");
   };
 

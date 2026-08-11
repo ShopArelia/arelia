@@ -39,8 +39,8 @@ export default function NotFound() {
 
           {/* Body */}
           <p className="text-[15px] leading-[1.7] text-surface-300 mb-8 max-w-[380px]">
-            The page you're looking for doesn't exist — or may have moved.
-            Every good cause deserves to be found, so let's get you back.
+            The page you&apos;re looking for doesn&apos;t exist — or may have moved.
+            Every good cause deserves to be found, so let&apos;s get you back.
           </p>
 
           {/* Actions */}

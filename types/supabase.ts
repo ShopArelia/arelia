@@ -12,31 +12,6 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "14.4"
   }
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
   public: {
     Tables: {
       blogs: {
@@ -75,6 +50,33 @@ export type Database = {
         }
         Relationships: []
       }
+      forms: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          reason: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          reason?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          reason?: string
+        }
+        Relationships: []
+      }
       ngos: {
         Row: {
           cause: string
@@ -108,6 +110,7 @@ export type Database = {
           external_link: string
           id: string
           image_url: string
+          merch_type: string | null
           ngo_id: string
           price: number
           title: string
@@ -117,6 +120,7 @@ export type Database = {
           external_link?: string
           id?: string
           image_url?: string
+          merch_type?: string | null
           ngo_id?: string
           price: number
           title?: string
@@ -126,6 +130,7 @@ export type Database = {
           external_link?: string
           id?: string
           image_url?: string
+          merch_type?: string | null
           ngo_id?: string
           price?: number
           title?: string
@@ -274,9 +279,6 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {},
   },

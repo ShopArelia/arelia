@@ -1,14 +1,19 @@
-import { getUser } from "@/utils/supabase/database";
-import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 
-export default async function AdminLayout({ children }: { children: React.ReactNode}) {
-    const user = await getUser();
+export const metadata: Metadata = {
+    robots: { index: false, follow: false },
+};
 
-    if (!user) redirect("/login");
-
-    return (
-        <div>
-            {children}
-        </div>
-    );
+/**
+ * Auth for this segment is enforced in `proxy.ts`, which redirects signed-out
+ * requests to /login before any rendering happens — so nothing here can leak
+ * into the response. Every mutation is re-checked server-side in
+ * `app/admin/actions.ts`, and RLS is the backstop.
+ *
+ * Deliberately synchronous: an `await` here would make the layout itself a
+ * blocking node above `loading.tsx`, which is what the Suspense boundary for
+ * this segment is.
+ */
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+    return <div>{children}</div>;
 }

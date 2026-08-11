@@ -1,8 +1,3 @@
-'use client'
-
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-
 import Header from "@/components/Header";
 import Divider from "@/components/Divider";
 import Filterbar from "@/components/Filterbar";
@@ -11,7 +6,7 @@ import ProductCard from "@/components/ProductCard";
 import Pagination from "./Pagination";
 import type { Tables } from "@/types/supabase";
 
-type ShopProduct = Tables<'products'> & {
+export type ShopProduct = Tables<'products'> & {
     ngoName: string;
     cause: string;
 };
@@ -29,52 +24,13 @@ type ShopPageProps = {
 };
 
 export default function ShopPage({ products, count, currentPage, totalPages, filter, sort, merch, ngoCount, productCount }: ShopPageProps) {
-    const searchParams = useSearchParams();
-    const router = useRouter();
-    
-    const [text, setText] = useState<string>(searchParams.get("search") ?? "");
-
-    useEffect(() => {
-        setText(searchParams.get("search") ?? "");
-    }, [searchParams]);
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            const params = new URLSearchParams(searchParams.toString());
-            if (text) {
-                params.set("search", text);
-            } else {
-                params.delete("search");
-            }
-            params.set("page", "1");
-            router.push(`/shop?${params.toString()}`);
-        }, 400);
-
-        return () => clearTimeout(timeout);
-    }, [text]);
-
-    const handleSort = (value: string) => {
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("sort", value);
-        params.set("page", "1");
-        router.push(`/shop?${params.toString()}`);
-    }
-
-    const changePage = (page: number) => {
-        if (page < 1 || page > totalPages) return;
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("page", String(page));
-        router.push(`/shop?${params.toString()}`);
-    }
-
     return (
         <div className="flex flex-col items-center bg-white">
             <Header
                 title="Shop"
                 description={`${productCount} products from ${ngoCount} verified nonprofits`}
                 inputPlaceholder="Search products..."
-                text={text}
-                onChange={setText}
+                path="/shop"
             />
 
             <Divider />
@@ -84,29 +40,35 @@ export default function ShopPage({ products, count, currentPage, totalPages, fil
                 countLabel="Products"
                 activeFilter={filter}
                 activeSort={sort}
-                onSortChange={handleSort}
-                path="shop"
+                path="/shop"
             />
 
-            <MerchCategory
-                activeMerch={merch}
-                activeFilter={filter}
-                activeSort={sort}
-                path="shop"
-            />
+            <MerchCategory activeMerch={merch} path="/shop" />
 
             <Divider />
 
             {/* Shop Page */}
             <div className="w-full flex flex-col px-8 py-12 md:px-16 md:py-24 gap-16 items-center justify-center">
-                <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] place-items-center gap-16 ">
-                    {products.map((product) => (
-                        <ProductCard key={product.id} product={product} ngoName={product.ngoName} cause={product.cause} />
-                    ))}
-                </div>
+                {products.length === 0 ? (
+                    <p className="text-body text-surface-300 font-DMSans-400 py-12">
+                        No products match those filters.
+                    </p>
+                ) : (
+                    <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] place-items-center gap-16">
+                        {products.map((product, index) => (
+                            <ProductCard
+                                key={product.id}
+                                product={product}
+                                ngoName={product.ngoName}
+                                cause={product.cause}
+                                preload={index < 4}
+                            />
+                        ))}
+                    </div>
+                )}
 
                 {totalPages > 1 && (
-                    <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={changePage} />
+                    <Pagination currentPage={currentPage} totalPages={totalPages} path="/shop" />
                 )}
             </div>
 

@@ -13,7 +13,7 @@ export default function NGOCard({ ngo }: NGOCardProps) {
         <div className="w-full flex flex-col md:flex-row py-12 gap-12 items-center">
             <div key={ngo.id} className='w-20 h-20 flex relative items-center justify-center rounded-full border border-surface-200 overflow-hidden shrink-0'>
                 {ngo.logo_url ? (
-                    <Image src={ngo.logo_url} alt={ngo.name} fill unoptimized />
+                    <Image src={ngo.logo_url} alt={ngo.name} fill sizes="80px" style={{ objectFit: 'cover' }} />
                 ) : (
                     <div className="w-20 h-20 rounded-full bg-primary-100 flex items-center justify-center text-primary-300 font-DMSans-500 text-h4">
                         {ngo.name.charAt(0).toUpperCase()}

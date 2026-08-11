@@ -1,4 +1,3 @@
-import NGOEditor from "@/components/NGOEditor";
 import { getSupabase } from "@/utils/supabase/database";
 import Link from "next/link";
 

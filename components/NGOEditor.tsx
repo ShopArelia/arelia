@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/utils/supabase/client";
+import { saveNGO, deleteNGO } from "@/app/admin/actions";
 import { Cause } from "@/data/causes";
 
 type NGOEditorProps = {
@@ -18,7 +18,6 @@ type NGOEditorProps = {
 
 export default function NGOEditor({ mode, initialData }: NGOEditorProps) {
   const router = useRouter();
-  const supabase = createClient();
 
   const [name,        setName]        = useState(initialData?.name        ?? "");
   const [logoUrl,     setLogoUrl]     = useState(initialData?.logo_url    ?? "");
@@ -37,14 +36,8 @@ export default function NGOEditor({ mode, initialData }: NGOEditorProps) {
 
     const payload = { name, logo_url: logoUrl, description, cause };
 
-    if (mode === "new") {
-      const { error: saveError } = await supabase.from("ngos").insert(payload);
-      if (saveError) { setError(saveError.message); setStatus("error"); return; }
-    } else {
-      const { error: saveError } = await supabase
-        .from("ngos").update(payload).eq("id", initialData!.id);
-      if (saveError) { setError(saveError.message); setStatus("error"); return; }
-    }
+    const result = await saveNGO(payload, mode === "edit" ? initialData!.id : undefined);
+    if (!result.ok) { setError(result.error); setStatus("error"); return; }
 
     setStatus("success");
     setTimeout(() => router.push("/admin/ngos"), 1000);
@@ -52,7 +45,10 @@ export default function NGOEditor({ mode, initialData }: NGOEditorProps) {
 
   const handleDelete = async () => {
     if (!confirm("Delete this NGO? This will also affect any linked products.")) return;
-    await supabase.from("ngos").delete().eq("id", initialData!.id);
+
+    const result = await deleteNGO(initialData!.id);
+    if (!result.ok) { setError(result.error); setStatus("error"); return; }
+
     router.push("/admin/ngos");
   };
 
@@ -166,6 +162,9 @@ export default function NGOEditor({ mode, initialData }: NGOEditorProps) {
             placeholder="https://..." className={inputClass} />
           {logoUrl && (
             <div className="mt-2 w-16 h-16 rounded-full border border-surface-100 overflow-hidden bg-white flex items-center justify-center">
+              {/* Raw <img> on purpose — previews a just-pasted URL whose host
+                  isn't in remotePatterns yet, so next/image would reject it. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={logoUrl} alt="Logo preview"
                 className="w-full h-full object-contain"
